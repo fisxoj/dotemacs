@@ -1,0 +1,558 @@
+#+TITLE: Matt's Emacs configuration
+
+* General
+** Me
+Who am I?  Where can I be contacted?
+#+begin_src emacs-lisp
+(setq user-full-name "Matt Novenstern"
+      user-mail-address "fisxoj@gmail.com")
+#+end_src
+
+** Packages
+
+#+begin_src emacs-lisp
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/"))
+
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+(require 'use-package)
+#+end_src
+
+** Numerous tweaks to default emacs settings
+Many of these things are borrowed from [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's configuration]].
+#+begin_src emacs-lisp
+  ;; No splash screen!  Why did it take you so long to add this?
+  (setq inhibit-startup-message t
+        inhibit-startup-screen t)
+
+  ;; No toolbar
+  (tool-bar-mode -1)
+
+  ;; Match parens
+  (show-paren-mode 1)
+
+  ;; No bells or flashes, please
+  (setq ring-bell-function 'ignore)
+
+  ;; Visual line mode by default
+  (global-visual-line-mode 1)
+
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (global-auto-revert-mode 1)
+  (setf truncate-lines nil)
+#+end_src
+
+Allow narrowing buffers, I know how to use it
+#+begin_src emacs-lisp
+(put 'narrow-to-region 'disabled nil)
+#+end_src
+** Backup
+
+#+begin_src emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq delete-old-versions -1)
+(setq version-control t)
+(setq vc-make-backup-files t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+#+end_src
+** Theme
+#+begin_src emacs-lisp
+(use-package color-theme :ensure t)
+(use-package color-theme-sanityinc-solarized :ensure t)
+(load-theme 'sanityinc-solarized-light t)
+#+end_src
+** Input
+Duplicate a line
+#+begin_src emacs-lisp
+(defun duplicate-line()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank)
+  (open-line 1)
+  (next-line 1)
+  (yank))
+
+(global-set-key (kbd "C-d") 'duplicate-line)
+
+#+end_src
+
+If I'm typing another alphabet, it's probably japanese
+#+begin_src emacs-lisp
+  (setq default-input-method "japanese")
+#+end_src
+** Saving
+Delete trailing whitespace
+#+begin_src emacs-lisp
+;; http://ergoemacs.org/emacs/elisp_compact_empty_lines.htmlrevi
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+** Window Decorations
+#+begin_src emacs-lisp
+(when window-system
+  (tooltip-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1))
+#+end_src
+** Mail
+#+begin_src emacs-lisp
+  (setq smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587
+        send-mail-function (quote smtpmail-send-it))
+#+end_src
+* Gibberish Generator
+#+begin_src emacs-lisp
+  (defun insert-gallia ()
+    (insert "Gallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur.  Hi omnes lingua, institutis, legibus inter se differunt. Gallos ab Aquitanis Garumna flumen, a Belgis Matrona et Sequana dividit.  Horum omnium fortissimi sunt Belgae, propterea quod a cultu atque humanitate provinciae longissime absunt, minimeque ad eos mercatores saepe commeant atque ea quae ad effeminandos animos pertinent important, proximique sunt Germanis, qui trans Rhenum incolunt, quibuscum continenter bellum gerunt. Qua de causa Helvetii quoque reliquos Gallos virtute praecedunt, quod fere cotidianis proeliis cum Germanis contendunt, cum aut suis finibus eos prohibent aut ipsi in eorum finibus bellum gerunt. Eorum una, pars, quam Gallos obtinere dictum est, initium capit a flumine Rhodano, continetur Garumna flumine, Oceano, finibus Belgarum, attingit etiam ab Sequanis et Helvetiis flumen Rhenum, vergit ad septentriones.  Belgae ab extremis Galliae finibus oriuntur, pertinent ad inferiorem partem fluminis Rheni, spectant in septentrionem et orientem solem.  Aquitania a Garumna flumine ad Pyrenaeos montes et eam partem Oceani quae est ad Hispaniam pertinet; spectat inter occasum solis et septentriones."))
+
+(global-set-key (kbd "C-c i g") 'insert-gallia)
+#+end_src
+* I/O
+** Elfeed
+#+begin_src emacs-lisp
+  (use-package elfeed
+    :ensure t
+    :init
+    (setq elfeed-feeds
+        '("http://skepchick.org/feed/"
+          ;; "http://planet.gnome.org/rss20.xml"
+          "http://mjg59.dreamwidth.org/data/rss" ;; Matthew Garrett
+          "http://sarah.thesharps.us/feed/" ;; Sarah Sahrp
+          "http://planet.lisp.org/rss20.xml"
+          "http://sachachua.com/blog/feed"
+          "http://nullprogram.com/feed/"
+          "http://readthiseatthat.blogspot.com/feeds/posts/default?alt=rss"
+          "http://slime-tips.tumblr.com/rss"
+          "http://emacshorrors.com/feed"
+          "http://www.antipope.org/charlie/blog-static/atom.xml"
+          ;; "https://letsencrypt.org/feed.xml"
+          "http://blog.8arrow.org/rss"
+          ))
+
+    :bind (("C-x w" . elfeed)))
+
+#+end_src
+** Notmuch
+#+begin_src emacs-lisp
+  (use-package notmuch
+    :ensure t
+    :defer t)
+#+end_src
+* Meta-Modes
+Projects, SVC, etc
+
+** Magit
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure t
+    :defer t
+    :bind (("C-x g" . magit-status)))
+#+end_src
+
+Open pull request URLs in the browser
+#+BEGIN_SRC emacs-lisp
+(defun magit-visit-pull-request-url ()
+  "Visit the current branch's PR on GitHub."
+  (interactive)
+  (let ((remote-branch (magit-get-remote-branch)))
+    (cond
+     ((null remote-branch)
+      (message "No remote branch"))
+     (t
+      (browse-url
+       (format "https://github.com/%s/pull/new/%s"
+               (replace-regexp-in-string
+                ".+github\\.com:\\(.+\\)\\(\\.git\\)?" "\\1" ;"[.@]+github\\.com:\\(.+\\)\\.git" "\\1"
+                (print (magit-get "remote"
+                                  (print (magit-get-remote))
+                                  "url")))
+               (cdr remote-branch)))))))
+
+(eval-after-load 'magit
+  '(define-key magit-mode-map "v"
+     #'magit-visit-pull-request-url))
+#+END_SRC
+** Projectile
+#+begin_src emacs-lisp
+  (use-package projectile
+    :ensure t
+    :defer t)
+  (use-package grizzl
+    :ensure t)
+  (projectile-global-mode)
+  (setq projectile-enable-caching t
+        projectile-completion-system 'grizzl)
+#+end_src
+
+** Multiple Cursors
+#+begin_src emacs-lisp
+  (use-package multiple-cursors
+    :defer t
+    :ensure t)
+
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C->") 'mc/mark-all-like-this-dwim)
+  (global-set-key (kbd "C-:") 'mc/mark-next-lines)
+#+end_src
+
+** Autocomplete
+#+BEGIN_SRC emacs-lisp
+(use-package auto-complete
+:ensure t
+:init
+(ac-config-default)
+(global-auto-complete-mode 1))
+#+END_SRC
+* Mode Tweaks
+** Org
+#+begin_src emacs-lisp
+  (setq org-directory "~/Documents/Notes/"
+        org-journal-dir "~/Documents/Notes/")
+#+end_src
+*** Presentation
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :defer t)
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (writegood-mode)
+              (flyspell-mode)
+              (org-bullets-mode)))
+  (setq org-startup-indented t)
+#+end_src
+*** Babel
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((gnuplot . t)
+   (lisp    . t)
+   (maxima  . t)
+   (python  . t)
+   (clojure . t)))
+
+(setq org-confirm-babel-evaluate nil)
+#+end_src
+*** Capture
+#+begin_src emacs-lisp
+(define-key global-map "\C-cc" 'org-capture)
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/Documents/Notes/todo.org" "Tasks")
+	 "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/Documents/Notes/journal.org")
+	 "* %?\nEntered on %U\n  %i\n  %a")
+	("n" "Note" entry (file+datetree "~/Documents/notebook.org")
+			       "* %?\nEntered %U\n %i\n %a")))
+#+end_src
+
+Store link
+#+begin_src emacs-lisp
+(define-key global-map "\C-cl" 'org-store-link)
+#+end_src
+*** Journal
+#+begin_src emacs-lisp
+(defvar org-journal-file "~/Documents/Notes/journal.org"
+  "Path to OrgMode journal file.")
+
+(defvar org-journal-dir "~/Documents/Notes/")
+
+(defvar org-journal-date-format "%Y-%m-%d"
+  "Date format string for journal headings.")
+#+end_src
+*** Speed Keys
+#+begin_src emacs-lisp
+
+#+end_src
+*** Logging
+#+begin_src emacs-lisp
+(setq org-log-done t)
+#+end_src
+*** Export
+#+begin_src emacs-lisp
+(use-package ox-html5slide :ensure t)
+(use-package ox-reveal :ensure t)
+
+#+end_src
+**** LateX
+#+begin_src emacs-lisp
+   (setf TeX-engine 'xetex)
+
+
+   (setq org-export-latex-todo-keyword-markup
+         '((t      . "\\textbf{%s}")
+           ("TODO" . "\\textcolor{red}{TODO}")
+           ("DONE" . "\\textcolor{green}{DONE}"))
+         org-latex-pdf-process (list "latexmk -pdflatex=xelatex -pdf -bibtex %f")
+         org-format-latex-header
+               "\\documentclass{article}
+   \\usepackage[usenames]{color}
+   [PACKAGES]
+   [DEFAULT-PACKAGES]
+   \\include{physics}
+   \\pagestyle{empty}             % do not remove
+   % The settings below are copied from fullpage.sty
+   \\setlength{\\textwidth}{\\paperwidth}
+   \\addtolength{\\textwidth}{-3cm}
+   \\setlength{\\oddsidemargin}{1.5cm}
+   \\addtolength{\\oddsidemargin}{-2.54cm}
+   \\setlength{\\evensidemargin}{\\oddsidemargin}
+   \\setlength{\\textheight}{\\paperheight}
+   \\addtolength{\\textheight}{-\\headheight}
+   \\addtolength{\\textheight}{-\\headsep}
+   \\addtolength{\\textheight}{-\\footskip}
+   \\addtolength{\\textheight}{-3cm}
+   \\setlength{\\topmargin}{1.5cm}
+   \\addtolength{\\topmargin}{-2.54cm}"
+               org-latex-image-default-width ".6\\linewidth")
+
+(dolist (class '(;; Presentation beamer class
+		 ("presentation"
+		  "\\documentclass{beamer}
+		\\usetheme[alternativetitlepage=true]{Torino}
+		%\\usecolortheme{{{{beamercolortheme}}}}
+		\\usepackage{fontspec}
+		\\include{common}
+		\\include{physics}"
+		  ("\\section{%s}" . "\\section*{%s}")
+
+		  ("\\begin{frame}[fragile]\\frametitle{%s}"
+		   "\\end{frame}"
+		   "\\begin{frame}[fragile]\\frametitle{%s}"
+		   "\\end{frame}"))
+
+		 ;; Revtex class
+		 ("revtex"
+		  "\\documentclass{revtex4-1}
+		\\usepackage{fontspec}
+		\\usepackage{graphicx}
+		[NO-DEFAULT-PACKAGES]"
+		  ("\\section{%s}" . "\\section*{%s}")
+
+		  ("\\subsection{%s}" . "\\subsection*{%s}"))
+		 ;; Problem set class
+		 ("problemset"
+               "\\documentclass{article}[10pt]
+                 [NO-DEFAULT-PACKAGES]
+                 \\include{common}
+		\\include{physics}
+		\\renewcommand\\thesubsection{\\textcircled{\\alph{subsection}}}"
+               ("\\section{%s}" . "\\section{%s}")
+               ("\\subsection{%s}" . "\\subsection{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection{%s}")
+               ("\\paragraph{%s}" . "\\paragraph{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph{%s}"))
+
+		 ;; notes
+		 ("notes"
+               "\\documentclass{article}[10pt]
+                [NO-DEFAULT-PACKAGES]
+                \\include{common}
+		\\include{physics}"
+               ("\\section{%s}" . "\\section{%s}")
+               ("\\subsection{%s}" . "\\subsection{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection{%s}")
+               ("\\paragraph{%s}" . "\\paragraph{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph{%s}"))))
+  ;; Add classes to export list
+  (add-to-list 'org-latex-classes
+	       class))
+#+end_src
+**** Reveal
+#+begin_src emacs-lisp
+(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+#+end_src
+*** Babel
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t)
+#+end_src
+*** Agenda
+#+begin_src emacs-lisp
+  (define-key global-map "\C-ca" 'org-agenda)
+
+  (setf org-agenda-files
+        (quote ("~/Documents/Notes/journal.org"
+                "~/Documents/Notes/todo.org")))
+#+end_src
+*** Org2Blog
+#+begin_src emacs-lisp
+  (use-package org2blog
+    :load-path "~/.emacs.d/org2blog"
+    :config
+    (setq
+     org2blog/wp-blog-alist
+     (quote
+      (("I will do science to it"
+        :url "http://www.fisxoj.net/xmlrpc.php"
+        :username "fisxoj"
+        :default-title "Hello World"
+        :default-categories nil
+        :tags-as-categories t)))
+
+     org2blog/wp-use-tags-as-categories t))
+#+end_src
+** JS2 Mode
+#+begin_src emacs-lisp
+  (defun js2-tab-properly ()
+    (interactive)
+    (let ((yas-fallback-behavior 'return-nil))
+      (unless (yas-expand)
+        (indent-for-tab-command)
+        (when (looking-back "^\s*")
+          (back-to-indentation)))))
+
+  (use-package js2-mode
+    :defer t
+    :ensure t
+
+    :bind-keymap (("TAB" . js2-tab-properly)))
+
+  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx$" . js2-mode))
+#+end_src
+** Lisp
+#+begin_src emacs-lisp
+    (use-package slime
+      :load-path "~/quicklisp/slime-helper.el")
+    (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
+          slime-contribs '(slime-fancy)
+          slime-complete-symbol*-fancy t
+          slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+
+    (use-package paredit
+      :defer t)
+    (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+    (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+    (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
+    (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
+#+end_src
+** Python
+#+BEGIN_SRC emacs-lisp
+(use-package elpy-mode
+  :ensure t
+  :defer t)
+
+(use-package fci-mode
+  :ensure t)
+
+(add-hook 'python-mode-hook 'fci-mode)
+(elpy-enable)
+;;(add-hook 'python-mode-hook 'jedi:setup)
+
+(setq fci-rule-column 80)
+#+END_SRC
+** Web
+#+begin_src emacs-lisp
+  (use-package web-mode
+    :defer t
+    :ensure t)
+  (use-package rainbow-mode :ensure t :defer t)
+
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.ejs$" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.scss$" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.css$" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (git-gutter+-mode)
+
+              (linum-mode)))
+
+  (setq-default indent-tabs-mode nil)
+
+  (require 'flyspell)
+  (setq flyspell-issue-message-flg nil
+        web-mode-markup-indent-offset 2
+        web-mode-code-indent-offset 2
+        web-mode-css-indent-offset 2)
+
+  (add-hook 'enh-ruby-mode-hook
+            (lambda () (flyspell-prog-mode)))
+
+  (add-hook 'web-mode-hook
+            (lambda () (flyspell-prog-mode)))
+  ;; flyspell mode breaks auto-complete mode without this.
+  (ac-flyspell-workaround)
+
+  (defadvice web-mode-highlight-part (around tweak-jsx activate)
+    (if (equal web-mode-content-type "jsx")
+        (let ((web-mode-enable-part-face nil))
+          ad-do-it)
+      ad-do-it))
+#+end_src
+** Octave
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+#+end_src
+** LaTeX
+#+begin_src emacs-lisp
+(setq TeX-auto-save t
+      TeX-parse-self t
+      TeX-save-query nil
+      TeX-PDF-mode t)
+
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-buffer)
+#+end_src
+** Ruby
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.ru$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.json.jbuilder$" . enh-ruby-mode))
+
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+(add-hook 'enh-ruby-mode-hook
+	  (lambda ()
+	    ;; (local-set-key (kbd "C-c l") 'rspec-compile-on-line)
+	    ;; (local-set-key (kbd "C-c k") 'rspec-compile-file)
+	    (ruby-electric-mode)
+	    (linum-mode)
+	    (git-gutter+-mode)))
+#+end_src
+** Clojure
+#+begin_src emacs-lisp
+  (use-package cider
+    :defer t
+    :ensure t)
+  (add-hook 'clojure-mode-hook (lambda () (paredit-mode 1)))
+
+  (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
+
+  (add-hook 'clojure-mode-hook 'paredit-mode)
+  (setq nrepl-hide-special-buffers t
+        cider-repl-pop-to-buffer-on-connect nil
+        cider-show-error-buffer nil
+        cider-repl-popup-stacktraces t
+        cider-lein-command "lein")
+#+end_src
+** Go
+#+BEGIN_SRC emacs-lisp
+(use-package go-mode
+  :ensure t
+  :defer t)
+
+(let ((gopath (expand-file-name "~/Code/gocode"))
+      (gobin (expand-file-name "~/Code/gocode/bin")))
+  (setenv "GOPATH" gopath)
+  (setenv "GOBIN" gobin)
+  (add-to-list 'exec-path gobin)
+  (add-hook 'before-save-hook
+            (lambda ()
+              (when (eq major-mode 'go-mode)
+                (gofmt-before-save)))))
+#+END_SRC
