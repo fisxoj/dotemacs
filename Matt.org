@@ -207,6 +207,12 @@ Open pull request URLs in the browser
 (ac-config-default)
 (global-auto-complete-mode 1))
 #+END_SRC
+** Swiper
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+:init (ivy-mode 1))
+
+#+END_SRC
 * Mode Tweaks
 ** Org
 #+begin_src emacs-lisp
@@ -395,6 +401,7 @@ Store link
      org2blog/wp-use-tags-as-categories t))
 #+end_src
 ** JS2 Mode
+https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a66e
 #+begin_src emacs-lisp
   (defun js2-tab-properly ()
     (interactive)
@@ -405,10 +412,11 @@ Store link
           (back-to-indentation)))))
 
   (use-package js2-mode
-    :defer t
+;;    :defer t
     :ensure t
 
-    :bind-keymap (("TAB" . js2-tab-properly)))
+    :init
+    (bind-key "TAB" 'js2-tab-properly js2-mode-map))
 
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
   (add-to-list 'auto-mode-alist '("\\.jsx$" . js2-mode))
@@ -431,11 +439,11 @@ Store link
 #+end_src
 ** Python
 #+BEGIN_SRC emacs-lisp
-(use-package elpy-mode
+(use-package elpy
   :ensure t
   :defer t)
 
-(use-package fci-mode
+(use-package fill-column-indicator
   :ensure t)
 
 (add-hook 'python-mode-hook 'fci-mode)
