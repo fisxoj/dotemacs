@@ -238,7 +238,8 @@ Open pull request URLs in the browser
      (ivy-mode           " ❦")
      (projectile-mode    " ↢")
      (flyspell-mode      " 🐦")
-     (org-indent-mode    ""))))
+     (org-indent-mode    "")
+     (magit-mode         "❇"))))
 
 #+END_SRC
 * Mode Tweaks
