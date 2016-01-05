@@ -240,7 +240,8 @@ Open pull request URLs in the browser
      (projectile-mode    " ↢")
      (flyspell-mode      " 🐦")
      (org-indent-mode    "")
-     (magit-mode         "❇"))))
+     (magit-mode         " ❇")
+     (writegood-mode     " ✎"))))
 
 #+END_SRC
 ** Writegood
