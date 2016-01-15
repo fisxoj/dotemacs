@@ -266,6 +266,7 @@ Open pull request URLs in the browser
               (flyspell-mode)
               (org-bullets-mode)))
   (setq org-startup-indented t)
+  (setq org-ellipsis "⤵")
 #+end_src
 *** Babel
 #+begin_src emacs-lisp
