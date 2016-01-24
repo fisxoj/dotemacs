@@ -300,7 +300,12 @@ Open pull request URLs in the browser
         ("j" "Journal" entry (file+datetree "~/Documents/Notes/journal.org")
 	 "* %?\nEntered on %U\n  %i\n  %a")
 	("n" "Note" entry (file+datetree "~/Documents/notebook.org")
-			       "* %?\nEntered %U\n %i\n %a")))
+			       "* %?\nEntered %U\n %i\n %a")
+  ;; http://stackoverflow.com/questions/14666625/combine-org-mode-capture-and-drill-modules-to-learn-vocabulary
+  ("J" "Japanese" entry
+    (file+headline "~/Documents/japanese drill.org" "Vocabulary")
+        "* %^{The word} :drill:\n %t\n %^{kana|%\\1} \n** Answer \n%^{The definition}"
+        :immediate-finish t)))
 #+end_src
 
 Store link
