@@ -294,15 +294,16 @@ Open pull request URLs in the browser
 #+end_src
 *** Babel
 #+begin_src emacs-lisp
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((gnuplot . t)
-   (lisp    . t)
-   (maxima  . t)
-   (python  . t)
-   (clojure . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((gnuplot . t)
+     (lisp    . t)
+     (maxima  . t)
+     (python  . t)
+     (clojure . t)))
 
-(setq org-confirm-babel-evaluate nil)
+  (setq org-confirm-babel-evaluate nil
+        org-src-tab-acts-natively t)
 #+end_src
 *** Capture
 #+begin_src emacs-lisp
