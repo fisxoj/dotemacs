@@ -201,12 +201,14 @@ Open pull request URLs in the browser
 #+begin_src emacs-lisp
   (use-package projectile
     :ensure t
-    :defer t)
-  (use-package grizzl
-    :ensure t)
-  (projectile-global-mode)
-  (setq projectile-enable-caching t
-        projectile-completion-system 'grizzl)
+    :defer t
+    :config
+    (use-package grizzl
+      :ensure t)
+    (projectile-global-mode)
+    (setq projectile-enable-caching t
+          projectile-completion-system 'grizzl
+          projectile-switch-project-action 'projectile-vc))
 #+end_src
 
 ** Multiple Cursors
