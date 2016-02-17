@@ -617,15 +617,36 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+BEGIN_SRC emacs-lisp
 (use-package go-mode
   :ensure t
-  :defer t)
-
-(let ((gopath (expand-file-name "~/Code/gocode"))
+  :defer t
+  :bind ("M-." . godef-jump)
+  :config
+  (let ((gopath (expand-file-name "~/Code/gocode"))
       (gobin (expand-file-name "~/Code/gocode/bin")))
-  (setenv "GOPATH" gopath)
-  (setenv "GOBIN" gobin)
-  (add-to-list 'exec-path gobin)
-  (add-hook 'before-save-hook
-            (lambda ()
-              (when (eq major-mode 'go-mode)
-                (gofmt-before-save)))))
+    (setenv "GOPATH" gopath)
+    (setenv "GOBIN" gobin)
+    (add-to-list 'exec-path gobin)
+    (add-hook 'before-save-hook
+              (lambda ()
+                (when (eq major-mode 'go-mode)
+                  (gofmt-before-save))))
+
+    (flycheck-define-checker go-goflymake
+      "A Go syntax and style checker using the go utility.
+    See URL `https://github.com/dougm/goflymake'."
+      :command ("goflymake" "-prefix=flycheck_"
+                (eval (if goflymake-debug "-debug=true" "-debug=false"))
+                source-inplace)
+      :error-patterns ((error line-start (file-name) ":" line ": " (message) line-end))
+      :modes go-mode)
+
+     (add-to-list 'flycheck-checkers 'go-gofmt)))
 #+END_SRC
+
+Here's some things to install to make all of these bits work
+
+#+BEGIN_EXAMPLE
+go get -u github.com/nsf/gocode
+go get -v github.com/rogpeppe/godef
+go get -u github.com/dougm/goflymake
+go get golang.org/x/tools/cmd/oracle
+#+END_EXAMPLE
