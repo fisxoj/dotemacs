@@ -62,6 +62,7 @@ Allow narrowing buffers, I know how to use it
 #+begin_src emacs-lisp
 (put 'narrow-to-region 'disabled nil)
 #+end_src
+
 ** Backup
 
 #+begin_src emacs-lisp
@@ -168,10 +169,16 @@ Projects, SVC, etc
 
 ** Magit
 #+begin_src emacs-lisp
-  (use-package magit
-    :ensure t
-    :defer t
-    :bind (("C-x g" . magit-status)))
+    (use-package magit
+      :ensure t
+      :defer t
+      :bind (("C-x g" . magit-status))
+      :config
+      (use-package github-browse-file
+        :ensure t)
+      (define-key magit-mode-map (kbd "C-c g f" #'github-browse-file))
+      (define-key magit-mode-map (kbd "C-c g b" #'github-browse-file-blame)))
+
 #+end_src
 
 Open pull request URLs in the browser
@@ -506,19 +513,29 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
 #+end_src
 ** Python
+Workaround for org html export with =fci= thanks to [[https://github.com/dakrone/dakrone-dotfiles/blob/master/emacs.org#fill-column-indicator][darkone]]!
 #+BEGIN_SRC emacs-lisp
-(use-package elpy
-  :ensure t
-  :defer t)
+  (use-package elpy
+    :ensure t
+    :defer t)
 
-(use-package fill-column-indicator
-  :ensure t)
+  (use-package fill-column-indicator
+    :ensure t
+    :config
+    (defun fci-mode-override-advice (&rest args))
+    (use-package org)
+    (advice-add 'org-html-fontify-code :around
+                (lambda (fun &rest args)
+                  (advice-add 'fci-mode :override #'fci-mode-override-advice)
+                  (let ((result  (apply fun args)))
+                    (advice-remove 'fci-mode #'fci-mode-override-advice)
+                    result))))
 
-(add-hook 'python-mode-hook 'fci-mode)
-(elpy-enable)
-;;(add-hook 'python-mode-hook 'jedi:setup)
+  (add-hook 'python-mode-hook 'fci-mode)
+  (elpy-enable)
+  ;;(add-hook 'python-mode-hook 'jedi:setup)
 
-(setq fci-rule-column 80)
+  (setq fci-rule-column 80)
 #+END_SRC
 ** Web
 #+begin_src emacs-lisp
@@ -621,7 +638,7 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 (use-package go-mode
   :ensure t
   :defer t
-  :bind ("M-." . godef-jump)
+  :init (bind-key "M-."  'godef-jump go-mode-map)
   :config
   (let ((gopath (expand-file-name "~/Code/gocode"))
       (gobin (expand-file-name "~/Code/gocode/bin")))
