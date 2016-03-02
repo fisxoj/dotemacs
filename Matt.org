@@ -164,6 +164,7 @@ Delete trailing whitespace
           "http://www.antipope.org/charlie/blog-static/atom.xml"
           ;; "https://letsencrypt.org/feed.xml"
           "http://blog.8arrow.org/rss"
+          "https://drmeister.wordpress.com/feed/"
           ))
 
     :bind (("C-x w" . elfeed)))
