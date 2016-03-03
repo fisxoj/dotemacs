@@ -78,6 +78,11 @@ Allow narrowing buffers, I know how to use it
 (use-package color-theme-sanityinc-solarized :ensure t)
 (load-theme 'sanityinc-solarized-light t)
 #+end_src
+** Font
+;; http://sourcefoundry.org/hack/
+#+BEGIN_SRC emacs-lisp
+(set-frame-font "Hack-10")
+#+END_SRC
 ** Input
 Duplicate a line
 #+begin_src emacs-lisp
