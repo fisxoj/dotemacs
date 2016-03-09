@@ -535,11 +535,12 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 ** Lisp
 #+begin_src emacs-lisp
     (use-package slime
-      :load-path "~/quicklisp/slime-helper.el")
+    :ensure t
+    :config
     (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
           slime-contribs '(slime-fancy)
           slime-complete-symbol*-fancy t
-          slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+          slime-complete-symbol-function 'slime-fuzzy-complete-symbol))
 
     (use-package paredit
      :ensure t)
