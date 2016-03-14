@@ -235,28 +235,23 @@ Open pull request URLs in the browser
           projectile-completion-system 'grizzl
           projectile-switch-project-action 'projectile-vc)
     (defun projectile-cl ()
-  "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
-  (-any? (lambda (file)
-           (let ((extension (file-name-extension file)))
-             (or (string= extension "lisp")
-                 (string= extension "cl"))))
-         (projectile-current-project-files)))
+      "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
+      (-any? (lambda (file)
+               (let ((extension (file-name-extension file)))
+                 (or (string= extension "lisp")
+                     (string= extension "cl"))))
+             (projectile-current-project-files)))
 
-(defun projectile-cl-test-function ()
-  "Calls into slime to run the current project's tests with asdf."
-  (message "Testing %s in slime..." (projectile-project-name))
-  (slime-eval-async
-      `(asdf:test-system ,(projectile-project-name))
-    (lambda (result) (message "Tests finished with result %s" result))
-    "CL-USER"))
+    (defun projectile-cl-test-function ()
+      "Calls into slime to run the current project's tests with asdf."
+      (message "Testing %s in slime..." (projectile-project-name))
+      (slime-eval-async
+          `(asdf:test-system ,(projectile-project-name))
+        (lambda (result) (message "Tests finished with result %s" result))
+        "CL-USER"))
 
-(projectile-register-project-type 'common-lisp #'projectile-cl nil #'projectile-cl-test-function))
+    (projectile-register-project-type 'common-lisp #'projectile-cl nil #'projectile-cl-test-function))
 #+end_src
-
-Stuff to make projectile run lisp unit tests that are wired up with asdf!
-#+BEGIN_SRC emacs-lisp
-
-#+END_SRC
 ** Multiple Cursors
 #+begin_src emacs-lisp
   (use-package multiple-cursors
