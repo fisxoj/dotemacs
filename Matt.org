@@ -324,8 +324,9 @@ Open pull request URLs in the browser
               (writegood-mode)
               (flyspell-mode)
               (org-bullets-mode)))
-  (setq org-startup-indented t)
-  (setq org-ellipsis "⤵")
+  (setq org-startup-indented t
+        org-ellipsis "⤵"
+        org-startup-with-inline-images t)
 #+end_src
 *** Babel
 #+begin_src emacs-lisp
