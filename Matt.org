@@ -615,6 +615,45 @@ Workaround for org html export with =fci= thanks to [[https://github.com/dakrone
           ad-do-it)
       ad-do-it))
 #+end_src
+** Rust
+Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
+#+BEGIN_SRC emacs-lisp
+(use-package racer
+  :ensure t
+  :config
+  (setq racer-cmd "~/bin/racer"
+        racer-rust-src-path "~/Code/rust/src"))
+
+(use-package rust-mode
+  :ensure t
+  :config
+  ;; Setting up configurations when you load rust-mode
+(add-hook 'rust-mode-hook
+
+     '(lambda ()
+     ;; Enable racer
+     (racer-activate)
+
+	 ;; Hook in racer with eldoc to provide documentation
+     (racer-turn-on-eldoc)
+
+	 ;; Use flycheck-rust in rust-mode
+     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+	 ;; Use company-racer in rust mode
+     (set (make-local-variable 'company-backends) '(company-racer))
+
+	 ;; Key binding to jump to method definition
+     (local-set-key (kbd "M-.") #'racer-find-definition)
+
+	 ;; Key binding to auto complete and indent
+     (local-set-key (kbd "TAB") #'company-indent-or-complete-common))))
+
+(use-package flymake-rust
+  :ensure t
+  :config
+  (add-hook 'rust-mode-hook 'flymake-rust-load))
+#+END_SRC
 ** Octave
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
