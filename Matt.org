@@ -362,6 +362,17 @@ Store link
 #+begin_src emacs-lisp
 (define-key global-map "\C-cl" 'org-store-link)
 #+end_src
+*** Linking
+Org notmuch for linking to emails
+#+BEGIN_SRC emacs-lisp
+  (use-package org-notmuch
+    :ensure t)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package orgit
+    :ensure t)
+#+END_SRC
 *** Journal
 #+begin_src emacs-lisp
 (defvar org-journal-file "~/Documents/Notes/journal.org"
