@@ -158,20 +158,22 @@ Delete trailing whitespace
     :ensure t
     :init
     (setq elfeed-feeds
-        '("http://skepchick.org/feed/"
+        '(("http://skepchick.org/feed/" newz)
           ;; "http://planet.gnome.org/rss20.xml"
-          "http://mjg59.dreamwidth.org/data/rss" ;; Matthew Garrett
-          "http://sarah.thesharps.us/feed/" ;; Sarah Sahrp
-          "http://planet.lisp.org/rss20.xml"
-          "http://sachachua.com/blog/feed"
-          "http://nullprogram.com/feed/"
-          "http://readthiseatthat.blogspot.com/feeds/posts/default?alt=rss"
-          "http://slime-tips.tumblr.com/rss"
-          "http://emacshorrors.com/feed"
-          "http://www.antipope.org/charlie/blog-static/atom.xml"
+          ("http://mjg59.dreamwidth.org/data/rss" linux) ;; Matthew Garrett
+          ("http://sarah.thesharps.us/feed/" linux) ;; Sarah Sharp
+          ("http://planet.lisp.org/rss20.xml" code lisp)
+          ("http://sachachua.com/blog/feed" emacs inspiration) ;; Sacha Chua
+          ("http://nullprogram.com/feed/" emacs) ;; Chris Wellons
+          ("http://readthiseatthat.blogspot.com/feeds/posts/default?alt=rss" books)
+          ("http://slime-tips.tumblr.com/rss" emacs lisp)
+          ("http://emacshorrors.com/feed" emacs)
+          ("http://www.antipope.org/charlie/blog-static/atom.xml" books) ;; Charles Stross
           ;; "https://letsencrypt.org/feed.xml"
-          "http://blog.8arrow.org/rss"
-          "https://drmeister.wordpress.com/feed/"
+          ("http://blog.8arrow.org/rss" lisp) ;; Eitaro Fukamachi
+          ("http://eudoxia.me/feed.xml" lisp) ;; Fernando Boretti
+          ("https://drmeister.wordpress.com/feed/" lisp) ;; Christian Schafmeister
+          ("http://www.pvk.ca/atom.xml" lisp) ;; Paul Kuhong (sbcl)
           ))
 
     :bind (("C-x w" . elfeed)))
