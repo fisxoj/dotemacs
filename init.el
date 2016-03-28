@@ -1,5 +1,5 @@
 (package-initialize nil)
 (setq package-enable-at-startup nil)
 (require 'use-package)
-(use-package org :ensure t)
+(use-package org :ensure org-plus-contrib)
 (org-babel-load-file "~/.emacs.d/Matt.org")

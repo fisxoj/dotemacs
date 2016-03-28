@@ -22,6 +22,8 @@ https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
 ** Packages
 
 #+begin_src emacs-lisp
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
@@ -538,21 +540,21 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+end_src
 ** Lisp
 #+begin_src emacs-lisp
-    (use-package slime
-    :ensure t
-    :config
-    (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
-          slime-contribs '(slime-fancy)
-          slime-complete-symbol*-fancy t
-          slime-complete-symbol-function 'slime-fuzzy-complete-symbol))
+  (use-package slime
+  :ensure t
+  :config
+  (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
+        slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color)
+        slime-complete-symbol*-fancy t
+        slime-complete-symbol-function 'slime-fuzzy-complete-symbol))
 
-    (use-package paredit
-     :ensure t)
-    (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-    (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
-    (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
-    (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
-    (add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
+  (use-package paredit
+   :ensure t)
+  (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+  (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+  (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
+  (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
+  (add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
 #+end_src
 ** Python
 Workaround for org html export with =fci= thanks to [[https://github.com/dakrone/dakrone-dotfiles/blob/master/emacs.org#fill-column-indicator][darkone]]!
