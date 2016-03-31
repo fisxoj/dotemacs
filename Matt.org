@@ -563,7 +563,10 @@ Workaround for org html export with =fci= thanks to [[https://github.com/dakrone
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
     :ensure t
-    :defer t)
+    :defer 2
+    :config
+    (diminish 'elpy-mode "☕")
+    (elpy-enable))
 
   (use-package fill-column-indicator
     :ensure t
@@ -575,13 +578,11 @@ Workaround for org html export with =fci= thanks to [[https://github.com/dakrone
                   (advice-add 'fci-mode :override #'fci-mode-override-advice)
                   (let ((result  (apply fun args)))
                     (advice-remove 'fci-mode #'fci-mode-override-advice)
-                    result))))
+                    result)))
 
-  (add-hook 'python-mode-hook 'fci-mode)
-  ;(elpy-enable)
-  ;;(add-hook 'python-mode-hook 'jedi:setup)
+    (add-hook 'elpy-mode-hook 'fci-mode)
 
-  (setq fci-rule-column 80)
+    (setq fci-rule-column 80))
 #+END_SRC
 ** Web
 #+begin_src emacs-lisp
