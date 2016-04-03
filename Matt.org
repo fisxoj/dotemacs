@@ -290,7 +290,6 @@ Open pull request URLs in the browser
 #+begin_src emacs-lisp
   (use-package projectile
     :ensure t
-    :defer t
     :config
     (projectile-global-mode)
     (use-package grizzl
