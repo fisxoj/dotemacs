@@ -347,19 +347,23 @@ Open pull request URLs in the browser
 #+end_src
 *** Capture
 #+begin_src emacs-lisp
-(define-key global-map "\C-cc" 'org-capture)
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Documents/Notes/todo.org" "Tasks")
-	 "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/Documents/Notes/journal.org")
-	 "* %?\nEntered on %U\n  %i\n  %a")
-	("n" "Note" entry (file+datetree "~/Documents/notebook.org")
-			       "* %?\nEntered %U\n %i\n %a")
-  ;; http://stackoverflow.com/questions/14666625/combine-org-mode-capture-and-drill-modules-to-learn-vocabulary
-  ("J" "Japanese" entry
-    (file+headline "~/Documents/japanese drill.org" "Vocabulary")
-        "* %^{The word} :drill:\n %t\n %^{kana|%\\1} \n** Answer \n%^{The definition}"
-        :immediate-finish t)))
+   (define-key global-map "\C-cc" 'org-capture)
+   (setq org-capture-templates
+         '(("t" "Todo" entry
+            (file+headline "~/Documents/Notes/todo.org" "Tasks")
+            "* TODO %?\nEntered %U\n  %i\n  %a")
+           ("j" "Journal" entry
+            (file+datetree "~/Documents/Notes/journal.org")
+            "* %?\nEntered %U\n  %i\n  %a")
+           ("n" "Note" entry
+            (file+datetree "~/Documents/notebook.org")
+            "* %?\nEntered %U\n %i\n %a")
+           ;; http://stackoverflow.com/questions/14666625/combine-org-mode-capture-and-drill-modules-to-learn-vocabulary
+           ("J" "Japanese" entry
+            (file+headline "~/Documents/japanese drill.org" "Vocabulary")
+            "* %^{The word} :drill:\n %t\n %^{kana|%\\1} \n** Answer \n%^{The definition}"
+            :immediate-finish t))
+         org-refile-targets '(("todo.org" :level . 1)))
 #+end_src
 
 Store link
