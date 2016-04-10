@@ -604,7 +604,7 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   :ensure t
   :config
   (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
-        slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color)
+        slime-contribs '(slime-fancy slime-banner)
         slime-complete-symbol*-fancy t
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol))
 
