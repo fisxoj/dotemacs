@@ -646,7 +646,9 @@ Workaround for org html export with =fci= thanks to [[https://github.com/dakrone
 #+begin_src emacs-lisp
   (use-package web-mode
     :defer t
-    :ensure t)
+    :ensure t
+    :config
+    (setq web-mode-engines-alist '(("django" . "\\.html"))))
   (use-package rainbow-mode :ensure t :defer t)
 
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -664,7 +666,7 @@ Workaround for org html export with =fci= thanks to [[https://github.com/dakrone
   (add-hook 'web-mode-hook
             (lambda ()
               (git-gutter+-mode)
-
+              (rainbow-mode)
               (linum-mode)))
 
   (setq-default indent-tabs-mode nil)
