@@ -202,6 +202,7 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
           ("http://eudoxia.me/feed.xml" lisp) ;; Fernando Boretti
           ("https://drmeister.wordpress.com/feed/" lisp) ;; Christian Schafmeister
           ("http://www.pvk.ca/atom.xml" lisp) ;; Paul Kuhong (sbcl)
+          ("https://mollermara.com/rss.xml" emacs)
           ))
 
     :bind (("C-x w" . elfeed)))
