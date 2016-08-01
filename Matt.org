@@ -602,13 +602,18 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+end_src
 ** Lisp
 #+begin_src emacs-lisp
+
   (use-package slime
-  :ensure t
+  :init
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (load (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el"))
+
   :config
   (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
+        slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color)
         slime-complete-symbol*-fancy t
         slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-  (slime-setup '(slime-fancy)))
+  (slime-setup slime-contribs))
 
   (use-package paredit
    :ensure t)
