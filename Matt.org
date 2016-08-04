@@ -618,6 +618,16 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
   (add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
 #+end_src
+** Elm
+#+BEGIN_SRC emacs-lisp
+  (use-package company :ensure t)
+  (use-package elm-mode
+    :ensure t
+    :config
+    (add-hook 'flycheck-mode 'flycheck-elm-setup)
+    (add-to-list 'company-backends 'company-elm)
+    (add-hook 'elm-mode-hook 'elm-oracle-setup-completion))
+#+END_SRC
 ** Python
 Workaround for org html export with =fci= thanks to [[https://github.com/dakrone/dakrone-dotfiles/blob/master/emacs.org#fill-column-indicator][darkone]]!
 #+BEGIN_SRC emacs-lisp
