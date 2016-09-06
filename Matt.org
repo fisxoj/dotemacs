@@ -567,24 +567,23 @@ Store link
 ** JS2 Mode
 https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a66e
 #+begin_src emacs-lisp
-  ; (defun js2-tab-properly ()
-  ;   (interactive)
-  ;   (let ((yas-fallback-behavior 'return-nil))
-  ;     (unless (yas-expand)
-  ;       (indent-for-tab-command)
-  ;       (when (looking-back "^\s*")
-  ;         (back-to-indentation)))))
+    ; (defun js2-tab-properly ()
+    ;   (interactive)
+    ;   (let ((yas-fallback-behavior 'return-nil))
+    ;     (unless (yas-expand)
+    ;       (indent-for-tab-command)
+    ;       (when (looking-back "^\s*")
+    ;         (back-to-indentation)))))
 
   (use-package js2-mode
-;;    :defer t
+    ;;    :defer t
     :ensure t
 
     :init
-    ;(bind-key "TAB" 'js2-tab-properly js2-mode-map)
-  )
+    (setf js2-basic-offset 2))
 
-  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-  (add-to-list 'auto-mode-alist '("\\.jsx$" . js2-mode))
+    (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+    (add-to-list 'auto-mode-alist '("\\.jsx$" . js2-mode))
 #+end_src
 ** Lisp
 #+begin_src emacs-lisp
