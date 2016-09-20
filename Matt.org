@@ -290,7 +290,7 @@ Open pull request URLs in the browser
       :ensure t)
 
     (setq projectile-enable-caching t
-          projectile-completion-system 'grizzl
+          projectile-completion-system 'ivy
           projectile-switch-project-action 'projectile-vc)
     (defun projectile-cl ()
       "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
