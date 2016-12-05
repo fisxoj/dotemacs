@@ -196,6 +196,7 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
           ("http://www.pvk.ca/atom.xml" lisp) ;; Paul Kuhong (sbcl)
           ("https://mollermara.com/rss.xml" emacs)
           ("http://www.suspectsemantics.com/atom.xml" rust)
+          ("http://birdlord.tumblr.com/" comics books culture) ;; Emily Horne (asofterworld)
           ))
 
     :bind (("C-x w" . elfeed)))
@@ -259,26 +260,26 @@ Projects, SVC, etc
 
 Open pull request URLs in the browser
 #+BEGIN_SRC emacs-lisp
-(defun magit-visit-pull-request-url ()
-  "Visit the current branch's PR on GitHub."
-  (interactive)
-  (let ((remote-branch (magit-get-remote-branch)))
-    (cond
-     ((null remote-branch)
-      (message "No remote branch"))
-     (t
-      (browse-url
-       (format "https://github.com/%s/pull/new/%s"
-               (replace-regexp-in-string
-                ".+github\\.com:\\(.+\\)\\(\\.git\\)?" "\\1" ;"[.@]+github\\.com:\\(.+\\)\\.git" "\\1"
-                (print (magit-get "remote"
-                                  (print (magit-get-remote))
-                                  "url")))
-               (cdr remote-branch)))))))
+  (defun magit-visit-pull-request-url ()
+    "Visit the current branch's PR on GitHub."
+    (interactive)
+    (let ((remote-branch (magit-get-remote-branch)))
+      (cond
+       ((null remote-branch)
+        (message "No remote branch"))
+       (t
+        (browse-url
+         (format "https://github.com/%s/pull/new/%s"
+                 (replace-regexp-in-string
+                  ".+github\\.com:\\(.+\\)\\(\\.git\\)?" "\\1" ;"[.@]+github\\.com:\\(.+\\)\\.git" "\\1"
+                  (magit-get "remote"
+                             (magit-get-remote)
+                             "url"))
+                 (cdr remote-branch)))))))
 
-(eval-after-load 'magit
-  '(define-key magit-mode-map "v"
-     #'magit-visit-pull-request-url))
+  (eval-after-load 'magit
+    '(define-key magit-mode-map "v"
+       #'magit-visit-pull-request-url))
 #+END_SRC
 ** Projectile
 #+begin_src emacs-lisp
@@ -625,7 +626,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (add-hook 'elm-mode-hook 'elm-oracle-setup-completion))
 #+END_SRC
 ** Python
-Workaround for org html export with =fci= thanks to [[https://github.com/dakrone/dakrone-dotfiles/blob/master/emacs.org#fill-column-indicator][darkone]]!
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
     :ensure t
