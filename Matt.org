@@ -83,7 +83,7 @@ Allow narrowing buffers, I know how to use it
 ** Font
 ;; http://sourcefoundry.org/hack/
 #+BEGIN_SRC emacs-lisp
-(set-frame-font "Hack-11")
+(set-frame-font "Inconsolata-12")
 #+END_SRC
 ** Input
 Duplicate a line
