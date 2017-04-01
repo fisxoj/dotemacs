@@ -340,14 +340,6 @@ Open pull request URLs in the browser
   (global-set-key (kbd "C-:") 'mc/mark-next-lines)
 #+end_src
 
-** Autocomplete
-#+BEGIN_SRC emacs-lisp
-(use-package auto-complete
-:ensure t
-:init
-(ac-config-default)
-(global-auto-complete-mode 1))
-#+END_SRC
 ** Swiper
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
@@ -619,9 +611,7 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 
   :config
   (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
-        slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color)
-        slime-complete-symbol*-fancy t
-        slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+        slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color slime-company))
   (slime-setup slime-contribs)))
 
   (use-package paredit
