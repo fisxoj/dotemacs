@@ -705,7 +705,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 
   (add-hook 'web-mode-hook
             (lambda ()
-              (git-gutter+-mode)
               (rainbow-mode)
               (linum-mode)))
 
@@ -800,8 +799,7 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 	    ;; (local-set-key (kbd "C-c l") 'rspec-compile-on-line)
 	    ;; (local-set-key (kbd "C-c k") 'rspec-compile-file)
 	    (ruby-electric-mode)
-	    (linum-mode)
-	    (git-gutter+-mode)))
+	    (linum-mode)))
 #+end_src
 ** Clojure
 #+begin_src emacs-lisp
