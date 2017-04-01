@@ -89,7 +89,7 @@ Allow narrowing buffers, I know how to use it
 ** Input
 Duplicate a line
 #+begin_src emacs-lisp
-(defun duplicate-line()
+(defun fisxoj/duplicate-line()
   (interactive)
   (move-beginning-of-line 1)
   (kill-line)
@@ -98,8 +98,7 @@ Duplicate a line
   (next-line 1)
   (yank))
 
-(global-set-key (kbd "C-d") 'duplicate-line)
-
+(global-set-key (kbd "C-c C-d") 'fisxoj/duplicate-line)
 #+end_src
 
 If I'm typing another alphabet, it's probably japanese
