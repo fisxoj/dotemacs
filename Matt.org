@@ -303,10 +303,17 @@ Open pull request URLs in the browser
 #+begin_src emacs-lisp
   (use-package projectile
     :ensure t
+    :bind (:map projectile-command-map
+                (("s s" . counsel-projectile-rg)))
     :config
-    (projectile-global-mode)
     (use-package grizzl
       :ensure t)
+    (use-package projectile-ripgrep
+      :ensure t)
+    (use-package counsel-projectile
+      :ensure t)
+    (projectile-global-mode)
+    (counsel-projectile-on)
 
     (setq projectile-enable-caching nil
           projectile-completion-system 'ivy
