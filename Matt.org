@@ -312,13 +312,12 @@ Open pull request URLs in the browser
       :ensure t)
     (use-package counsel-projectile
       :ensure t)
-    (projectile-global-mode)
     (counsel-projectile-on)
 
     (setq projectile-enable-caching nil
           projectile-completion-system 'ivy
           projectile-switch-project-action 'projectile-vc)
-    (defun projectile-cl ()
+    (defun projectile-cl-project-p ()
       "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
       (-any? (lambda (file)
                (let ((extension (file-name-extension file)))
