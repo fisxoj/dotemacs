@@ -255,7 +255,8 @@ Projects, SVC, etc
            :map magit-mode-map
            ("H f" . github-browse-file)
            ("H b" . github-browse-file-blame)
-           ("v" . endless/visit-pull-request-url))
+           ("v" . endless/visit-pull-request-url)
+           ("#" . magit-gh-pulls-popup))
     :config
     (use-package github-browse-file
       :ensure t)
