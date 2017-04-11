@@ -76,15 +76,16 @@ Allow narrowing buffers, I know how to use it
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-(use-package color-theme :ensure t)
-(use-package darkokai-theme :ensure t)
-(load-theme 'darkokai t)
+  (use-package color-theme :ensure t)
+  (use-package zenburn-theme :ensure t
+    :config
+    (load-theme 'zenburn t))
 #+end_src
 ** Font
 ;; http://sourcefoundry.org/hack/
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'gnu/linux)
-  (set-frame-font "Inconsolata-12"))
+  (set-frame-font "Inconsolata-10"))
 #+END_SRC
 ** Input
 Duplicate a line
