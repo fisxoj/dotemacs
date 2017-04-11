@@ -1,5 +1,16 @@
+%*
+#*
 Matt.el
 auto-save-list/
 backups/
 elpa/
 projectile-bookmarks.eld
+eshell/
+projectile.cache
+secrets.el
+session.*
+tramp
+url/
+var/
+bookmarks
+.mc-lists.el
