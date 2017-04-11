@@ -261,6 +261,7 @@ Projects, SVC, etc
       :ensure t)
     (use-package magit-gh-pulls
       :ensure t
+      :diminish magit-gh-pulls-mode
       :config
       (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
     (defun endless/visit-pull-request-url ()
@@ -360,6 +361,7 @@ Open pull request URLs in the browser
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
  :ensure t
+ :diminish ivy-mode
  :init (ivy-mode 1))
 
 #+END_SRC
