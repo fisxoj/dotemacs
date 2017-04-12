@@ -315,6 +315,7 @@ Open pull request URLs in the browser
       :ensure t)
     (use-package counsel-projectile
       :ensure t)
+    (projectile-global-mode)
     (counsel-projectile-on)
 
     (setq projectile-enable-caching nil
