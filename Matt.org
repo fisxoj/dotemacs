@@ -5,7 +5,7 @@
 Who am I?  Where can I be contacted?
 #+begin_src emacs-lisp
 (setq user-full-name "Matt Novenstern"
-      user-mail-address "fisxoj@gmail.com")
+      user-mail-address "matt.novenstern@themuse.com")
 #+end_src
 ** Unicode
 https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
@@ -76,15 +76,16 @@ Allow narrowing buffers, I know how to use it
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-(use-package color-theme :ensure t)
-(use-package darkokai-theme :ensure t)
-(load-theme 'darkokai t)
+  (use-package color-theme :ensure t)
+  (use-package zenburn-theme :ensure t
+    :config
+    (load-theme 'zenburn t))
 #+end_src
 ** Font
 ;; http://sourcefoundry.org/hack/
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'gnu/linux)
-  (set-frame-font "Inconsolata-12"))
+  (set-frame-font "Inconsolata-10"))
 #+END_SRC
 ** Input
 Duplicate a line
@@ -253,12 +254,14 @@ Projects, SVC, etc
            :map magit-mode-map
            ("H f" . github-browse-file)
            ("H b" . github-browse-file-blame)
-           ("v" . endless/visit-pull-request-url))
+           ("v" . endless/visit-pull-request-url)
+           ("#" . magit-gh-pulls-popup))
     :config
     (use-package github-browse-file
       :ensure t)
     (use-package magit-gh-pulls
       :ensure t
+      :diminish magit-gh-pulls-mode
       :config
       (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
     (defun endless/visit-pull-request-url ()
@@ -302,15 +305,22 @@ Open pull request URLs in the browser
 #+begin_src emacs-lisp
   (use-package projectile
     :ensure t
+    :bind (:map projectile-command-map
+                (("s s" . counsel-projectile-rg)))
     :config
-    (projectile-global-mode)
     (use-package grizzl
       :ensure t)
+    (use-package projectile-ripgrep
+      :ensure t)
+    (use-package counsel-projectile
+      :ensure t)
+    (projectile-global-mode)
+    (counsel-projectile-on)
 
     (setq projectile-enable-caching nil
           projectile-completion-system 'ivy
           projectile-switch-project-action 'projectile-vc)
-    (defun projectile-cl ()
+    (defun projectile-cl-project-p ()
       "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
       (-any? (lambda (file)
                (let ((extension (file-name-extension file)))
@@ -326,7 +336,7 @@ Open pull request URLs in the browser
         (lambda (result) (message "Tests finished with result %s" result))
         "CL-USER"))
 
-    (projectile-register-project-type 'common-lisp #'projectile-cl nil #'projectile-cl-test-function))
+    (projectile-register-project-type 'common-lisp #'projectile-cl-project-p nil #'projectile-cl-test-function))
 #+end_src
 ** Multiple Cursors
 #+begin_src emacs-lisp
@@ -344,6 +354,7 @@ Open pull request URLs in the browser
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
  :ensure t
+ :diminish ivy-mode
  :init (ivy-mode 1))
 
 #+END_SRC
@@ -671,6 +682,26 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 ** Coffeescript
 #+BEGIN_SRC emacs-lisp
 (setq coffee-tab-width 4)
+#+END_SRC
+** Typescript
+#+BEGIN_SRC emacs-lisp
+  (use-package typescript-mode
+    :mode "\\.ts(x)?\\'"
+    :ensure t
+    :config
+    (use-package tide :ensure t)
+    (defun setup-tide-mode ()
+      (interactive)
+      (tide-setup)
+      (flycheck-mode +1)
+      (setq flycheck-check-syntax-automatically '(save mode-enabled))
+      (eldoc-mode +1)
+      (tide-hl-identifier-mode +1)
+      ;; company is an optional dependency. You have to
+      ;; install it separately via package-install
+      ;; `M-x package-install [ret] company`
+      (company-mode +1))
+    (add-hook 'typescript-mode-hook #'setup-tide-mode))
 #+END_SRC
 ** Web
 #+begin_src emacs-lisp
