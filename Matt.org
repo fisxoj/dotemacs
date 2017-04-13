@@ -761,8 +761,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 
   (add-hook 'web-mode-hook
             (lambda () (flyspell-prog-mode)))
-  ;; flyspell mode breaks auto-complete mode without this.
-  (ac-flyspell-workaround)
 
   (defadvice web-mode-highlight-part (around tweak-jsx activate)
     (if (equal web-mode-content-type "jsx")
