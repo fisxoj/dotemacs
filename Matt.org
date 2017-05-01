@@ -718,6 +718,7 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
       ;; company is an optional dependency. You have to
       ;; install it separately via package-install
       ;; `M-x package-install [ret] company`
+      (smartparens-mode +1)
       (company-mode +1))
     (add-hook 'typescript-mode-hook #'setup-tide-mode))
 #+END_SRC
