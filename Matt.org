@@ -741,6 +741,8 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   (add-to-list 'auto-mode-alist '("\\.scss$" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.css$" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  ;; Mithril coat templates
+  (add-to-list 'auto-mode-alist '("\\.coat\\'" . web-mode))
 
   (add-hook 'web-mode-hook
             (lambda ()
