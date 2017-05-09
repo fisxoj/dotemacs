@@ -401,7 +401,8 @@ Open pull request URLs in the browser
   (use-package org-jira
     :ensure t
     :config
-  (setq jiralib-url "https://themuse.atlassian.net/"))
+  (setq jiralib-url "https://themuse.atlassian.net/"
+        org-jira-done-states '("Fertig" "Done" "Closed" "Resolved")))
 #+END_SRC
 * Mode Tweaks
 ** Org
