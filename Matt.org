@@ -31,6 +31,7 @@ https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 (require 'use-package)
+(setq use-package-always-ensure t)
 #+end_src
 
 ** Numerous tweaks to default emacs settings
@@ -76,8 +77,8 @@ Allow narrowing buffers, I know how to use it
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  (use-package color-theme :ensure t)
-  (use-package zenburn-theme :ensure t
+  (use-package color-theme)
+  (use-package zenburn-theme
     :config
     (load-theme 'zenburn t))
 #+end_src
@@ -168,7 +169,6 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
 ** Eshell
 #+BEGIN_SRC emacs-lisp
   (use-package eshell-git-prompt
-    :ensure t
     :init
     (eshell-git-prompt-use-theme 'powerline))
 #+END_SRC
@@ -176,7 +176,6 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
 ** Elfeed
 #+begin_src emacs-lisp
   (use-package elfeed
-    :ensure t
     :init
     (setq elfeed-feeds
         '(("http://skepchick.org/feed/" newz)
@@ -238,7 +237,6 @@ Taken from [[https://github.com/skeeto/elfeed/issues/34#issuecomment-158824561][
 ** Notmuch
 #+begin_src emacs-lisp
   (use-package notmuch
-    :ensure t
     :defer t
     :config (require 'org-notmuch))
 #+end_src
@@ -248,7 +246,6 @@ Projects, SVC, etc
 ** Magit
 #+begin_src emacs-lisp
   (use-package magit
-    :ensure t
     :defer t
     :bind (("C-x g" . magit-status)
            :map magit-mode-map
@@ -257,10 +254,8 @@ Projects, SVC, etc
            ("v" . endless/visit-pull-request-url)
            ("#" . magit-gh-pulls-popup))
     :config
-    (use-package github-browse-file
-      :ensure t)
+    (use-package github-browse-file)
     (use-package magit-gh-pulls
-      :ensure t
       :diminish magit-gh-pulls-mode
       :config
       (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
@@ -304,16 +299,11 @@ Open pull request URLs in the browser
 ** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
-    :ensure t
     :bind (:map projectile-command-map
                 (("s s" . counsel-projectile-rg)))
     :config
-    (use-package grizzl
-      :ensure t)
-    (use-package projectile-ripgrep
-      :ensure t)
-    (use-package counsel-projectile
-      :ensure t)
+    (use-package projectile-ripgrep)
+    (use-package counsel-projectile)
     (projectile-global-mode)
     (counsel-projectile-on)
 
@@ -341,8 +331,7 @@ Open pull request URLs in the browser
 ** Multiple Cursors
 #+begin_src emacs-lisp
   (use-package multiple-cursors
-    :defer t
-    :ensure t)
+    :defer t)
 
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -353,7 +342,6 @@ Open pull request URLs in the browser
 ** Swiper
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
- :ensure t
  :diminish ivy-mode
  :init (ivy-mode 1))
 
@@ -361,7 +349,6 @@ Open pull request URLs in the browser
 ** Dim
 #+BEGIN_SRC emacs-lisp
 (use-package dim
- :ensure t
  :init
 (dim-major-names
    '((emacs-lisp-mode    "EL")
@@ -384,8 +371,7 @@ Open pull request URLs in the browser
 #+END_SRC
 ** Writegood
 #+BEGIN_SRC emacs-lisp
-(use-package writegood-mode
-  :ensure t)
+(use-package writegood-mode)
 #+END_SRC
 * Mode Tweaks
 ** Org
@@ -396,7 +382,6 @@ Open pull request URLs in the browser
 *** Presentation
 #+begin_src emacs-lisp
   (use-package org-bullets
-    :ensure t
     :defer t)
   (add-hook 'org-mode-hook
             (lambda ()
@@ -447,8 +432,7 @@ Store link
 #+end_src
 *** Linking
 #+BEGIN_SRC emacs-lisp
-  (use-package orgit
-    :ensure t)
+  (use-package orgit)
 #+END_SRC
 *** Journal
 #+begin_src emacs-lisp
@@ -470,8 +454,8 @@ Store link
 #+end_src
 *** Export
 #+begin_src emacs-lisp
-(use-package ox-html5slide :ensure t)
-(use-package ox-reveal :ensure t)
+(use-package ox-html5slide)
+(use-package ox-reveal)
 
 #+end_src
 **** LateX
@@ -604,8 +588,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 
   (use-package js2-mode
     ;;    :defer t
-    :ensure t
-
     :init
     (setf js2-basic-offset 2))
 
@@ -614,30 +596,29 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+end_src
 ** Lisp
 #+begin_src emacs-lisp
-(when (file-exists-p (expand-file-name "~/quicklisp/slime-helper.el"))
-  (use-package slime
-  :init
-  (load (expand-file-name "~/quicklisp/slime-helper.el"))
-  (load (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el"))
+  (when (file-exists-p (expand-file-name "~/quicklisp/slime-helper.el"))
+    (use-package slime
+    :init
+    (load (expand-file-name "~/quicklisp/slime-helper.el"))
+    (load (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el"))
 
-  :config
-  (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
-        slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color slime-company))
-  (slime-setup slime-contribs)))
+    :config
+    (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
+          slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color ;; slime-company
+                                       ))
+    (slime-setup slime-contribs)))
 
-  (use-package paredit
-   :ensure t)
-  (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-  (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
-  (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
-  (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
-  (add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
+    (use-package paredit)
+    (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+    (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+    (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
+    (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
+    (add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
 #+end_src
 ** Elm
 #+BEGIN_SRC emacs-lisp
-  (use-package company :ensure t)
+  (use-package company)
   (use-package elm-mode
-    :ensure t
     :config
     (add-hook 'flycheck-mode 'flycheck-elm-setup)
     (add-to-list 'company-backends 'company-elm)
@@ -646,7 +627,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 ** Python
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
-    :ensure t
     :defer 2
     :config
     (diminish 'elpy-mode "☕")
@@ -658,13 +638,11 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (add-to-list 'flycheck-disabled-checkers 'python-pylint))
 
   (use-package flycheck-mypy
-    :ensure t
     :config
     (setq flycheck-python-pycompile-executable "python3.6"
           flycheck-python-pylint-executable "python3-pylint"))
 
   (use-package fill-column-indicator
-    :ensure t
     :config
     (defun fci-mode-override-advice (&rest args))
     (use-package org)
@@ -687,9 +665,8 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+BEGIN_SRC emacs-lisp
   (use-package typescript-mode
     :mode "\\.ts(x)?\\'"
-    :ensure t
     :config
-    (use-package tide :ensure t)
+    (use-package tide)
     (defun setup-tide-mode ()
       (interactive)
       (tide-setup)
@@ -707,10 +684,9 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+begin_src emacs-lisp
   (use-package web-mode
     :defer t
-    :ensure t
     :config
     (setq web-mode-engines-alist '(("django" . "\\.html"))))
-  (use-package rainbow-mode :ensure t :defer t)
+  (use-package rainbow-mode :defer t)
 
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -753,13 +729,11 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+BEGIN_SRC emacs-lisp
 (use-package racer
-  :ensure t
   :config
   (setq racer-cmd "~/bin/racer"
         racer-rust-src-path "~/Code/rust/src"))
 
 (use-package rust-mode
-  :ensure t
   :config
   ;; Setting up configurations when you load rust-mode
 (add-hook 'rust-mode-hook
@@ -784,7 +758,6 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
      (local-set-key (kbd "TAB") #'company-indent-or-complete-common))))
 
 (use-package flymake-rust
-  :ensure t
   :config
   (add-hook 'rust-mode-hook 'flymake-rust-load))
 #+END_SRC
@@ -823,8 +796,7 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 ** Clojure
 #+begin_src emacs-lisp
   (use-package cider
-    :defer t
-    :ensure t)
+    :defer t)
   (add-hook 'clojure-mode-hook (lambda () (paredit-mode 1)))
 
   (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
@@ -839,7 +811,6 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 ** Go
 #+BEGIN_SRC emacs-lisp
   (use-package go-mode
-    :ensure t
     :defer t
     :bind (:map go-mode-map
                 ("M-." . godef-jump))
@@ -921,7 +892,6 @@ go get golang.org/x/tools/cmd/oracle
 ** Markdown to org
 #+BEGIN_SRC emacs-lisp
   (use-package pandoc
-    :ensure t
     :config
     (defun fisxoj/region-md-to-org (start end)
       (interactive "r")
