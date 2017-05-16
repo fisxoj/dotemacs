@@ -303,6 +303,10 @@ Open pull request URLs in the browser
     :ensure t
     :bind (:map projectile-command-map
                 (("s s" . counsel-projectile-rg)))
+    :init
+    (counsel-projectile-on)
+    (projectile-global-mode)
+
     :config
     (use-package grizzl
       :ensure t)
@@ -310,8 +314,6 @@ Open pull request URLs in the browser
       :ensure t)
     (use-package counsel-projectile
       :ensure t)
-    (projectile-global-mode)
-    (counsel-projectile-on)
 
     (setq projectile-enable-caching nil
           projectile-completion-system 'ivy
