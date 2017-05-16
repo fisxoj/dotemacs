@@ -58,6 +58,12 @@ Many of these things are borrowed from [[http://pages.sachachua.com/.emacs.d/Sac
 
   ;; No blinking
   (blink-cursor-mode -1)
+
+  ;; Don't bg emacs on C-z
+  (global-set-key (kbd "C-z")
+                (lambda ()
+                  (interactive)
+                  (message "Not sending emacs to background, you fat-fingered dummy!")))
 #+end_src
 
 Allow narrowing buffers, I know how to use it
