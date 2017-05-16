@@ -155,17 +155,6 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
         smtpmail-smtp-service 587
         send-mail-function (quote smtpmail-send-it))
 #+end_src
-** GC Tweaks
-#+BEGIN_SRC emacs-lisp
-(defun my-minibuffer-setup-hook ()
-  (setq gc-cons-threshold most-positive-fixnum))
-
-(defun my-minibuffer-exit-hook ()
-  (setq gc-cons-threshold 800000))
-
-(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
-(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
-#+END_SRC
 ** Eshell
 #+BEGIN_SRC emacs-lisp
   (use-package eshell-git-prompt
