@@ -384,7 +384,7 @@ Open pull request URLs in the browser
      (paredit-mode       " ()" paredit)
      (eldoc-mode         ""    eldoc)
      (ivy-mode           " ❦")
-     (projectile-mode    " ↢")
+     (projectile-mode    " 🎯")
      (flyspell-mode      " 🐦")
      (org-indent-mode    "")
      (magit-mode         " ❇")
