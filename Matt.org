@@ -366,14 +366,17 @@ Open pull request URLs in the browser
 #+END_SRC
 ** Dim
 #+BEGIN_SRC emacs-lisp
-(use-package dim
- :ensure t
- :init
-(dim-major-names
-   '((emacs-lisp-mode    "EL")
-     (lisp-mode          "CL")
-     (Info-mode          "I")
-     (help-mode          "H")))
+  (use-package dim
+   :ensure t
+   :init
+  (dim-major-names
+     '((emacs-lisp-mode    "EL")
+       (lisp-mode          "CL")
+       (Info-mode          "I")
+       (help-mode          "H")
+       (typescript-mode    "TS")
+       (js2-mode           "JS2")
+       (python-mode        "PY")))
   (dim-minor-names
    '((auto-fill-function " ↵")
      (isearch-mode       " 🔎")
@@ -385,8 +388,9 @@ Open pull request URLs in the browser
      (flyspell-mode      " 🐦")
      (org-indent-mode    "")
      (magit-mode         " ❇")
-     (writegood-mode     " ✎"))))
-
+     (writegood-mode     " ✎")
+     (tide-mode          " 🌊")
+     (visual-line-mode   " ⤸")))
 #+END_SRC
 ** Writegood
 #+BEGIN_SRC emacs-lisp
