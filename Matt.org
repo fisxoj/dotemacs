@@ -390,7 +390,7 @@ Open pull request URLs in the browser
      (magit-mode         " ❇")
      (writegood-mode     " ✎")
      (tide-mode          " 🌊")
-     (visual-line-mode   " ⤸")))
+     (visual-line-mode   " ⤸"))))
 #+END_SRC
 ** Writegood
 #+BEGIN_SRC emacs-lisp
