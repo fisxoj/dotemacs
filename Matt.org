@@ -405,6 +405,13 @@ Open pull request URLs in the browser
   (setq jiralib-url "https://themuse.atlassian.net/"
         org-jira-done-states '("Fertig" "Done" "Closed" "Resolved")))
 #+END_SRC
+** Smartparens
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :config
+    (sp-use-paredit-bindings)
+    )
+#+END_SRC
 * Mode Tweaks
 ** Org
 #+begin_src emacs-lisp
