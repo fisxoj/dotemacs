@@ -326,7 +326,7 @@ Open pull request URLs in the browser
         (lambda (result) (message "Tests finished with result %s" result))
         "CL-USER"))
 
-    (projectile-register-project-type 'common-lisp #'projectile-cl-project-p nil #'projectile-cl-test-function))
+    (projectile-register-project-type 'common-lisp #'projectile-cl-project-p :test #'projectile-cl-test-function))
 #+end_src
 ** Multiple Cursors
 #+begin_src emacs-lisp
