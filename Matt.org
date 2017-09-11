@@ -376,7 +376,7 @@ Open pull request URLs in the browser
        (help-mode          "H")
        (typescript-mode    "TS")
        (js2-mode           "JS2")
-       (python-mode        "PY")))
+       (python-mode        "🐍")))
   (dim-minor-names
    '((auto-fill-function " ↵")
      (isearch-mode       " 🔎")
