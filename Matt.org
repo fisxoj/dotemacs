@@ -65,6 +65,8 @@ Many of these things are borrowed from [[http://pages.sachachua.com/.emacs.d/Sac
                 (lambda ()
                   (interactive)
                   (message "Not sending emacs to background, you fat-fingered dummy!")))
+
+(setf confirm-kill-emacs 'y-or-n-p)
 #+end_src
 
 Allow narrowing buffers, I know how to use it
