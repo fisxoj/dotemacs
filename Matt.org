@@ -350,14 +350,6 @@ Open pull request URLs in the browser
   (global-set-key (kbd "C-:") 'mc/mark-next-lines)
 #+end_src
 
-** Autocomplete
-#+BEGIN_SRC emacs-lisp
-(use-package auto-complete
-:ensure t
-:init
-(ac-config-default)
-(global-auto-complete-mode 1))
-#+END_SRC
 ** Swiper
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
