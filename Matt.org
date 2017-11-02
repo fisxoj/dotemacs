@@ -957,3 +957,14 @@ go get golang.org/x/tools/cmd/oracle
         (delete-region start end)
         (insert-string org-content))))
 #+END_SRC
+
+** Dealing with different monitor pixel densities
+#+BEGIN_SRC emacs-lisp
+(defun fisxoj/home-mode ()
+  (interactive)
+  (set-frame-font "Inconsolata-8"))
+
+(defun fisxoj/work-mode ()
+  (interactive)
+  (set-frame-font "Inconsolata-10"))
+#+END_SRC
