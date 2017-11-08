@@ -661,7 +661,10 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   (use-package flycheck-mypy
     :config
     (setq flycheck-python-pycompile-executable "python3.6"
-          flycheck-python-pylint-executable "python3-pylint"))
+          flycheck-python-pylint-executable "python3-pylint")
+    (when (require 'flycheck nil t)
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (add-hook 'elpy-mode-hook 'flycheck-mode)))
 
   (use-package fill-column-indicator
     :config
