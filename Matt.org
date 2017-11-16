@@ -489,8 +489,12 @@ Store link
 #+end_src
 *** Export
 #+begin_src emacs-lisp
-(use-package ox-html5slide :ensure t)
-(use-package ox-reveal :ensure t)
+  (use-package ox-html5slide)
+  (use-package ox-reveal)
+  (use-package ox-beamer
+    :config
+    (setq org-latex-listings 'minted))
+
 
 #+end_src
 **** LateX
@@ -502,7 +506,7 @@ Store link
          '((t      . "\\textbf{%s}")
            ("TODO" . "\\textcolor{red}{TODO}")
            ("DONE" . "\\textcolor{green}{DONE}"))
-         org-latex-pdf-process (list "latexmk -pdflatex=xelatex -pdf -bibtex %f")
+         org-latex-pdf-process (list "latexmk -pdflatex=xelatex -shell-escape -pdf -bibtex %f")
          org-format-latex-header
                "\\documentclass{article}
    \\usepackage[usenames]{color}
