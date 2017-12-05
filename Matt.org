@@ -7,6 +7,10 @@ Who am I?  Where can I be contacted?
 (setq user-full-name "Matt Novenstern"
       user-mail-address "matt.novenstern@themuse.com")
 #+end_src
+** Diminish
+#+BEGIN_SRC emacs-lisp
+(use-package diminish :ensure t)
+#+END_SRC
 ** Unicode
 https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
 #+BEGIN_SRC emacs-lisp
