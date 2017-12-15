@@ -917,6 +917,10 @@ go get -v github.com/rogpeppe/godef
 go get -u github.com/dougm/goflymake
 go get golang.org/x/tools/cmd/oracle
 #+END_EXAMPLE
+** WGrep
+#+BEGIN_SRC emacs-lisp
+(setq wgrep-auto-save-buffer t)
+#+END_SRC
 * Special Commands
 ** Flip window split
 #+BEGIN_SRC emacs-lisp
