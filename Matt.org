@@ -1,12 +1,10 @@
 #+TITLE: Matt's Emacs configuration
 
 * General
-** Me
-Who am I?  Where can I be contacted?
-#+begin_src emacs-lisp
-(setq user-full-name "Matt Novenstern"
-      user-mail-address "fisxoj@gmail.com")
-#+end_src
+* Diminish
+#+BEGIN_SRC emacs-lisp
+(use-package diminish :ensure t)
+#+END_SRC
 ** Unicode
 https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
 #+BEGIN_SRC emacs-lisp
@@ -31,7 +29,7 @@ https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 (require 'use-package)
-(setq use-package-always-ensure t)
+(setf use-package-always-ensure t)
 #+end_src
 
 ** Numerous tweaks to default emacs settings
@@ -74,6 +72,13 @@ Allow narrowing buffers, I know how to use it
 (put 'narrow-to-region 'disabled nil)
 #+end_src
 
+Replace the default scratch message with something more fun
+#+BEGIN_SRC emacs-lisp
+  (use-package adafruit-wisdom
+    :config
+    (setq inhibit-startup-message t)
+    (setq initial-scratch-message (concat ";; " (adafruit-wisdom-select) "\n")))
+#+END_SRC
 ** Backup
 
 #+begin_src emacs-lisp
@@ -175,8 +180,7 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
   (use-package elfeed
     :init
     (setq elfeed-feeds
-        '(("http://skepchick.org/feed/" newz)
-          ;; "http://planet.gnome.org/rss20.xml"
+        '(;; "http://planet.gnome.org/rss20.xml"
           ("http://mjg59.dreamwidth.org/data/rss" linux) ;; Matthew Garrett
           ("http://sarah.thesharps.us/feed/" linux) ;; Sarah Sharp
           ("http://planet.lisp.org/rss20.xml" code lisp)
@@ -193,7 +197,10 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
           ("http://www.pvk.ca/atom.xml" lisp) ;; Paul Kuhong (sbcl)
           ("https://mollermara.com/rss.xml" emacs)
           ("http://www.suspectsemantics.com/atom.xml" rust)
-          ("http://birdlord.tumblr.com/" comics books culture) ;; Emily Horne (asofterworld)
+          ("http://birdlord.tumblr.com/" comics books culture) ;; Emily Horne
+          ("https://www.harihareswara.net/nb/nb.cgi/syndicate/sumana" linux) ;; Sumana Harihareswara
+          ("https://jvns.ca/atom.xml" ruby rust) ;; Julia Evans
+          ("http://jensimmons.com/blog.xml" web design) ;; Jen Simmons (Mozilla)
           ))
 
     :bind (("C-x w" . elfeed)))
@@ -299,7 +306,6 @@ Open pull request URLs in the browser
     :bind (:map projectile-command-map
                 (("s s" . counsel-projectile-rg)))
     :init
-    (counsel-projectile-on)
     (projectile-global-mode)
 
     :config
@@ -477,7 +483,6 @@ Store link
 #+begin_src emacs-lisp
 (use-package ox-html5slide)
 (use-package ox-reveal)
-
 #+end_src
 **** LateX
 #+begin_src emacs-lisp
@@ -488,7 +493,7 @@ Store link
          '((t      . "\\textbf{%s}")
            ("TODO" . "\\textcolor{red}{TODO}")
            ("DONE" . "\\textcolor{green}{DONE}"))
-         org-latex-pdf-process (list "latexmk -pdflatex=xelatex -pdf -bibtex %f")
+         org-latex-pdf-process (list "latexmk -pdflatex=xelatex -shell-escape -pdf -bibtex %f")
          org-format-latex-header
                "\\documentclass{article}
    \\usepackage[usenames]{color}
@@ -579,23 +584,7 @@ Store link
         (quote ("~/Documents/Notes/journal.org"
                 "~/Documents/Notes/todo.org")))
 #+end_src
-*** Org2Blog
-#+begin_src emacs-lisp
-  (use-package org2blog
-    :load-path "~/.emacs.d/org2blog"
-    :config
-    (setq
-     org2blog/wp-blog-alist
-     (quote
-      (("I will do science to it"
-        :url "http://www.fisxoj.net/xmlrpc.php"
-        :username "fisxoj"
-        :default-title "Hello World"
-        :default-categories nil
-        :tags-as-categories t)))
 
-     org2blog/wp-use-tags-as-categories t))
-#+end_src
 ** JS2 Mode
 https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a66e
 #+begin_src emacs-lisp
@@ -663,7 +652,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (setq flycheck-python-pycompile-executable "python3.6"
           flycheck-python-pylint-executable "python3-pylint")
     (when (require 'flycheck nil t)
-      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
       (add-hook 'elpy-mode-hook 'flycheck-mode)))
 
   (use-package fill-column-indicator
@@ -873,6 +861,10 @@ go get -v github.com/rogpeppe/godef
 go get -u github.com/dougm/goflymake
 go get golang.org/x/tools/cmd/oracle
 #+END_EXAMPLE
+** WGrep
+#+BEGIN_SRC emacs-lisp
+(setq wgrep-auto-save-buffer t)
+#+END_SRC
 * Special Commands
 ** Flip window split
 #+BEGIN_SRC emacs-lisp
@@ -933,4 +925,15 @@ go get golang.org/x/tools/cmd/oracle
                                                "markdown_github" "org")))
         (delete-region start end)
         (insert-string org-content))))
+#+END_SRC
+
+** Dealing with different monitor pixel densities
+#+BEGIN_SRC emacs-lisp
+(defun fisxoj/home-mode ()
+  (interactive)
+  (set-frame-font "Inconsolata-8"))
+
+(defun fisxoj/work-mode ()
+  (interactive)
+  (set-frame-font "Inconsolata-10"))
 #+END_SRC
