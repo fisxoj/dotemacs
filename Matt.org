@@ -78,6 +78,13 @@ Allow narrowing buffers, I know how to use it
 (put 'narrow-to-region 'disabled nil)
 #+end_src
 
+Replace the default scratch message with something more fun
+#+BEGIN_SRC emacs-lisp
+  (use-package adafruit-wisdom
+    :config
+    (setq inhibit-startup-message t)
+    (setq initial-scratch-message (concat ";; " (adafruit-wisdom-select) "\n")))
+#+END_SRC
 ** Backup
 
 #+begin_src emacs-lisp
