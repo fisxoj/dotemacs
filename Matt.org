@@ -1,12 +1,6 @@
 #+TITLE: Matt's Emacs configuration
 
 * General
-** Me
-Who am I?  Where can I be contacted?
-#+begin_src emacs-lisp
-(setq user-full-name "Matt Novenstern"
-      user-mail-address "matt.novenstern@themuse.com")
-#+end_src
 ** Diminish
 #+BEGIN_SRC emacs-lisp
 (use-package diminish :ensure t)
