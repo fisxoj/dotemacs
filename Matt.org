@@ -189,8 +189,7 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
     :ensure t
     :init
     (setq elfeed-feeds
-        '(("http://skepchick.org/feed/" newz)
-          ;; "http://planet.gnome.org/rss20.xml"
+        '(;; "http://planet.gnome.org/rss20.xml"
           ("http://mjg59.dreamwidth.org/data/rss" linux) ;; Matthew Garrett
           ("http://sarah.thesharps.us/feed/" linux) ;; Sarah Sharp
           ("http://planet.lisp.org/rss20.xml" code lisp)
@@ -207,7 +206,10 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
           ("http://www.pvk.ca/atom.xml" lisp) ;; Paul Kuhong (sbcl)
           ("https://mollermara.com/rss.xml" emacs)
           ("http://www.suspectsemantics.com/atom.xml" rust)
-          ("http://birdlord.tumblr.com/" comics books culture) ;; Emily Horne (asofterworld)
+          ("http://birdlord.tumblr.com/" comics books culture) ;; Emily Horne
+          ("https://www.harihareswara.net/nb/nb.cgi/syndicate/sumana" linux) ;; Sumana Harihareswara
+          ("https://jvns.ca/atom.xml" ruby rust) ;; Julia Evans
+          ("http://jensimmons.com/blog.xml" web design) ;; Jen Simmons (Mozilla)
           ))
 
     :bind (("C-x w" . elfeed)))
