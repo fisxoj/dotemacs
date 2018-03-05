@@ -279,11 +279,6 @@ Projects, SVC, etc
                            "url"))
                (magit-get-current-branch))))
     (setq magit-completing-read-function 'ivy-completing-read))
-
-  (use-package magithub
-    :after magit
-    :ensure t
-    :config (magithub-feature-autoinject t))
 #+end_src
 
 Open pull request URLs in the browser
@@ -316,7 +311,6 @@ Open pull request URLs in the browser
     :bind (:map projectile-command-map
                 (("s s" . counsel-projectile-rg)))
     :init
-    (counsel-projectile-on)
     (projectile-global-mode)
 
     :config
@@ -680,7 +674,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (setq flycheck-python-pycompile-executable "python3.6"
           flycheck-python-pylint-executable "python3-pylint")
     (when (require 'flycheck nil t)
-      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
       (add-hook 'elpy-mode-hook 'flycheck-mode)))
 
   (use-package fill-column-indicator
