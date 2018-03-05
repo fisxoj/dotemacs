@@ -605,23 +605,7 @@ Store link
         (quote ("~/Documents/Notes/journal.org"
                 "~/Documents/Notes/todo.org")))
 #+end_src
-*** Org2Blog
-#+begin_src emacs-lisp
-  (use-package org2blog
-    :load-path "~/.emacs.d/org2blog"
-    :config
-    (setq
-     org2blog/wp-blog-alist
-     (quote
-      (("I will do science to it"
-        :url "http://www.fisxoj.net/xmlrpc.php"
-        :username "fisxoj"
-        :default-title "Hello World"
-        :default-categories nil
-        :tags-as-categories t)))
 
-     org2blog/wp-use-tags-as-categories t))
-#+end_src
 ** JS2 Mode
 https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a66e
 #+begin_src emacs-lisp
