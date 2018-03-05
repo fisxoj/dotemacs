@@ -35,6 +35,7 @@ https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 (require 'use-package)
+(setf use-package-always-ensure t)
 #+end_src
 
 ** Numerous tweaks to default emacs settings
