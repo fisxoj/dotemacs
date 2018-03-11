@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: defp
+# key: defp
+# --
+(defpackage :$1
+  (:use #:cl
+        #:alexandria))
+
+(in-package :$1)
+
+$0
