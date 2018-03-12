@@ -677,7 +677,7 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 ** Typescript
 #+BEGIN_SRC emacs-lisp
   (use-package typescript-mode
-    :mode "\\.ts(x)?\\'"
+    :mode "\\.tsx?$"
     :config
     (use-package tide)
     (defun setup-tide-mode ()
