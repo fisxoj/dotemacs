@@ -70,6 +70,8 @@ Many of these things are borrowed from [[http://pages.sachachua.com/.emacs.d/Sac
 Allow narrowing buffers, I know how to use it
 #+begin_src emacs-lisp
 (put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 #+end_src
 
 Replace the default scratch message with something more fun
