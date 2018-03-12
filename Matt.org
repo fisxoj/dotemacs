@@ -938,3 +938,12 @@ go get golang.org/x/tools/cmd/oracle
   (interactive)
   (set-frame-font "Inconsolata-10"))
 #+END_SRC
+
+** Save without running hooks
+#+BEGIN_SRC emacs-lisp
+(defun fisxoj/save-without-hooks ()
+  "Save without running any before-save-hooks"
+  (interactive)
+  (let ((before-save-hook nil))
+    (save-buffer)))
+#+END_SRC
