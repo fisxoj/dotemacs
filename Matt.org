@@ -314,7 +314,6 @@ Open pull request URLs in the browser
     (use-package projectile-ripgrep)
     (use-package counsel-projectile)
     (projectile-global-mode)
-    (counsel-projectile-on)
 
     (setq projectile-enable-caching nil
           projectile-completion-system 'ivy
@@ -622,7 +621,7 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 
     (use-package paredit)
     (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-    (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1) (company-mode +1))
+    (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1) (company-mode +1)))
     (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
     (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
     (add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
