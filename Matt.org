@@ -947,3 +947,10 @@ go get golang.org/x/tools/cmd/oracle
   (let ((before-save-hook nil))
     (save-buffer)))
 #+END_SRC
+
+** Revisit as root
+#+BEGIN_SRC emacs-lisp
+(defun fisxoj/revisit-as-root ()
+  (interactive)
+  (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name)))
+#+END_SRC
