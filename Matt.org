@@ -646,14 +646,13 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (elpy-enable)
     (add-hook 'python-mode-hook 'flycheck-mode)
     (add-to-list 'flycheck-disabled-checkers 'python-flake8)
-    (add-to-list 'flycheck-disabled-checkers 'python-pylint))
+    (add-to-list 'flycheck-disabled-checkers 'python-pylint)
+    (add-to-list 'flycheck-disabled-checkers 'python-pycompile))
 
   (use-package flycheck-mypy
     :config
-    (setq flycheck-python-pycompile-executable "python3.6"
-          flycheck-python-pylint-executable "python3-pylint")
-    (when (require 'flycheck nil t)
-      (add-hook 'elpy-mode-hook 'flycheck-mode)))
+  (setq flycheck-python-mypy-args '("--ignore-missing-imports")
+        flycheck-checkers (delete 'python-mypy flycheck-checkers)))
 
   (use-package fill-column-indicator
     :config
