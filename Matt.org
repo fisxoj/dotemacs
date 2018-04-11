@@ -257,14 +257,9 @@ Projects, SVC, etc
            :map magit-mode-map
            ("H f" . github-browse-file)
            ("H b" . github-browse-file-blame)
-           ("v" . endless/visit-pull-request-url)
-           ("#" . magit-gh-pulls-popup))
+           ("v" . endless/visit-pull-request-url))
     :config
     (use-package github-browse-file)
-    (use-package magit-gh-pulls
-      :diminish magit-gh-pulls-mode
-      :config
-      (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
     (defun endless/visit-pull-request-url ()
       "Visit the current branch's PR on Github."
       (interactive)
