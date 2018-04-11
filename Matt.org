@@ -651,8 +651,8 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 
   (use-package flycheck-mypy
     :config
-  (setq flycheck-python-mypy-args '("--ignore-missing-imports")
-        flycheck-checkers (delete 'python-mypy flycheck-checkers)))
+    (setq flycheck-python-mypy-args '("--ignore-missing-imports")
+          flycheck-checkers (delete 'python-mypy flycheck-checkers)))
 
   (use-package fill-column-indicator
     :config
