@@ -930,7 +930,7 @@ go get golang.org/x/tools/cmd/oracle
 
 (defun fisxoj/work-mode ()
   (interactive)
-  (set-frame-font "Inconsolata-10"))
+  (set-frame-font "Inconsolata-6"))
 #+END_SRC
 
 ** Save without running hooks
