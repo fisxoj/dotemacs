@@ -14,3 +14,10 @@ url/
 var/
 bookmarks
 .mc-lists.el
+adafruit-wisdom.cache
+gotools/
+speed-type/
+.python-environments/
+ac-comphist.dat
+network-security.data
+request/
