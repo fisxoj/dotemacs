@@ -859,6 +859,12 @@ go get golang.org/x/tools/cmd/oracle
 #+BEGIN_SRC emacs-lisp
 (setq wgrep-auto-save-buffer t)
 #+END_SRC
+
+** Eldoc
+#+BEGIN_SRC emacs-lisp
+  (setf eldoc-idle-delay 0.2
+        eldoc-echo-area-use-multiline-p t)
+#+END_SRC
 * Special Commands
 ** Flip window split
 #+BEGIN_SRC emacs-lisp
