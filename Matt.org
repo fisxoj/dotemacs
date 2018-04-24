@@ -162,7 +162,7 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
       (progn (center-text)
              (setq centered t))))
 
-  (define-key global-map (kbd "C-c M-t") 'center-text-mode)
+  (global-set-key (kbd "C-c M-t") 'center-text-mode)
 #+END_SRC
 ** Mail
 #+begin_src emacs-lisp
@@ -334,12 +334,11 @@ Open pull request URLs in the browser
 ** Multiple Cursors
 #+begin_src emacs-lisp
   (use-package multiple-cursors
-    :defer t)
-
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C->") 'mc/mark-all-like-this-dwim)
-  (global-set-key (kbd "C-:") 'mc/mark-next-lines)
+    :defer t
+    :bind (("C->" . mc/mark-next-like-this)
+           ("C-<" . mc/mark-previous-like-this)
+           ("C-c C->" . mc/mark-all-like-this-dwim)
+           ("C-:" . mc/mark-next-lines)))
 #+end_src
 
 ** Swiper
@@ -947,4 +946,12 @@ go get golang.org/x/tools/cmd/oracle
 (defun fisxoj/revisit-as-root ()
   (interactive)
   (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name)))
+#+END_SRC
+
+* Work Tweaks
+Things for my work
+
+#+BEGIN_SRC emacs-lisp
+  (when (file-exists-p "jira.el")
+    (load "jira.el"))
 #+END_SRC
