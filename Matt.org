@@ -92,8 +92,8 @@ Replace the default scratch message with something more fun
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  (use-package color-theme :ensure t)
-  (use-package base16-theme :ensure t
+  (use-package color-theme)
+  (use-package base16-theme
     :config
     (load-theme 'base16-oceanicnext t))
 #+end_src
@@ -351,7 +351,6 @@ Open pull request URLs in the browser
 ** Dim
 #+BEGIN_SRC emacs-lisp
   (use-package dim
-   :ensure t
    :init
   (dim-major-names
      '((emacs-lisp-mode    "EL")
@@ -383,7 +382,6 @@ Open pull request URLs in the browser
 ** Jira
 #+BEGIN_SRC emacs-lisp
   (use-package org-jira
-    :ensure t
     :config
   (setq jiralib-url "https://themuse.atlassian.net/"
         org-jira-done-states '("Fertig" "Done" "Closed" "Resolved")))
@@ -392,8 +390,7 @@ Open pull request URLs in the browser
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
     :config
-    (sp-use-paredit-bindings)
-    )
+    (sp-use-paredit-bindings))
 #+END_SRC
 * Mode Tweaks
 ** Org
@@ -592,7 +589,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     ;         (back-to-indentation)))))
 
   (use-package js2-mode
-    ;;    :defer t
     :init
     (setf js2-basic-offset 2))
 
@@ -632,7 +628,6 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 ** Python
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
-    :defer 2
     :config
     (diminish 'elpy-mode "☕")
     (setq elpy-rpc-backend "jedi"
