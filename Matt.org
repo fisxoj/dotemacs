@@ -392,6 +392,11 @@ Open pull request URLs in the browser
     :config
     (sp-use-paredit-bindings))
 #+END_SRC
+** Rainbow
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-mode)
+#+END_SRC
+
 * Mode Tweaks
 ** Org
 #+begin_src emacs-lisp
@@ -627,24 +632,17 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+END_SRC
 ** Python
 #+BEGIN_SRC emacs-lisp
-  (use-package elpy
-    :config
-    (diminish 'elpy-mode "☕")
-    (setq elpy-rpc-backend "jedi"
-          elpy-rpc-python-command "python3.6")
-    (elpy-enable)
-    (add-hook 'python-mode-hook 'flycheck-mode)
-    (add-to-list 'flycheck-disabled-checkers 'python-flake8)
-    (add-to-list 'flycheck-disabled-checkers 'python-pylint)
-    (add-to-list 'flycheck-disabled-checkers 'python-pycompile))
-
   (use-package flycheck-mypy
     :config
+    (add-to-list 'flycheck-enabled-checkers 'python-mypy)
     (setq flycheck-python-mypy-args '("--ignore-missing-imports")
-          flycheck-checkers (delete 'python-mypy flycheck-checkers)))
+          flycheck-python-flake8-executable "python3.6"
+          flycheck-python-pylint-executable "python3.6"
+          flycheck-python-pycompile-executable "python3.6"))
 
   (use-package fill-column-indicator
     :config
+    ;; Override FCI in babel block so it doesn't fuck up formatting there
     (defun fci-mode-override-advice (&rest args))
     (use-package org)
     (advice-add 'org-html-fontify-code :around
@@ -653,10 +651,18 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
                   (let ((result  (apply fun args)))
                     (advice-remove 'fci-mode #'fci-mode-override-advice)
                     result)))
-
-    (add-hook 'elpy-mode-hook 'fci-mode)
-
+    ;; Set the bar at 80 chars, PEP8-style
     (setq fci-rule-column 80))
+
+  (use-package elpy
+    :requires (flycheck-mypy fill-column-indicator)
+    :hook ((elpy-mode . flycheck-mode)
+           (elpy-mode . fci-mode))
+    :diminish (elpy-mode . "☕")
+    :config
+    (setq elpy-rpc-backend "jedi"
+          elpy-rpc-python-command "python3.6")
+    (elpy-enable))
 #+END_SRC
 ** Coffeescript
 #+BEGIN_SRC emacs-lisp
@@ -664,107 +670,69 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+END_SRC
 ** Typescript
 #+BEGIN_SRC emacs-lisp
+  (use-package tide)
   (use-package typescript-mode
-    :mode "\\.tsx?$"
+    :mode "\\.tsx?\\'"
+    :hook ((before-save . tide-format-before-save)
+           (typescript-mode . tide-setup)
+           (typescript-mode . company-mode)
+           (typescript-mode . smartparens-mode)
+           (typescript-mode . flycheck-mode)
+           (typescript-mode . eldoc-mode)
+           (typescript-mode . tide-hl-identifier-mode))
+    :requires tide
     :config
-    (use-package tide)
-    (defun setup-tide-mode ()
-      (interactive)
-      (tide-setup)
-      (flycheck-mode +1)
-      (setq flycheck-check-syntax-automatically '(save mode-enabled))
-      (eldoc-mode +1)
-      (tide-hl-identifier-mode +1)
-      ;; company is an optional dependency. You have to
-      ;; install it separately via package-install
-      ;; `M-x package-install [ret] company`
-      (smartparens-mode +1)
-      (company-mode +1))
-    (add-hook 'before-save-hook #'tide-format-before-save)
-    (add-hook 'typescript-mode-hook #'setup-tide-mode))
+    (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 #+END_SRC
 ** Web
 #+begin_src emacs-lisp
   (use-package web-mode
-    :defer t
+    :mode (("\\.phtml\\'" . web-mode)
+           ("\\.tpl\\.php\\'" . web-mode)
+           ("\\.[gj]sp\\'" . web-mode)
+           ("\\.as[cp]x\\'" . web-mode)
+           ("\\.erb\\'" . web-mode)
+           ("\\.mustache\\'" . web-mode)
+           ("\\.djhtml\\'" . web-mode)
+           ("\\.ejs\\'" . web-mode)
+           ("\\.scss\\'" . web-mode)
+           ("\\.css\\'" . web-mode)
+           ("\\.html?\\'" . web-mode)
+           ;; Mithril coat templates
+           ("\\.coat\\'" . web-mode))
+    :hook ((web-mode . rainbow-mode)
+           (web-mode . flyspell-prog-mode))
+    :requires rainbow-mode
     :config
-    (setq web-mode-engines-alist '(("django" . "\\.html"))))
-  (use-package rainbow-mode :defer t)
+    (setq web-mode-engines-alist '(("django" . "\\.html")))
 
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.ejs$" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss$" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.css$" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  ;; Mithril coat templates
-  (add-to-list 'auto-mode-alist '("\\.coat\\'" . web-mode))
+    (setq-default indent-tabs-mode nil)
 
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (rainbow-mode)
-              (linum-mode)))
+    (setq web-mode-markup-indent-offset 4
+          web-mode-code-indent-offset 0
+          web-mode-css-indent-offset 4)
 
-  (setq-default indent-tabs-mode nil)
-
-  (require 'flyspell)
-  (setq flyspell-issue-message-flg nil
-        web-mode-markup-indent-offset 4
-        web-mode-code-indent-offset 0
-        web-mode-css-indent-offset 4)
-
-  (add-hook 'enh-ruby-mode-hook
-            (lambda () (flyspell-prog-mode)))
-
-  (add-hook 'web-mode-hook
-            (lambda () (flyspell-prog-mode)))
-
-  (defadvice web-mode-highlight-part (around tweak-jsx activate)
-    (if (equal web-mode-content-type "jsx")
-        (let ((web-mode-enable-part-face nil))
-          ad-do-it)
-      ad-do-it))
+    (defadvice web-mode-highlight-part (around tweak-jsx activate)
+      (if (equal web-mode-content-type "jsx")
+          (let ((web-mode-enable-part-face nil))
+            ad-do-it)
+        ad-do-it)))
 #+end_src
 ** Rust
 Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+BEGIN_SRC emacs-lisp
-(use-package racer
-  :config
-  (setq racer-cmd "~/bin/racer"
-        racer-rust-src-path "~/Code/rust/src"))
+  (use-package racer
+    :config
+    (setq racer-cmd "~/bin/racer"
+          racer-rust-src-path "~/Code/rust/src"))
 
-(use-package rust-mode
-  :config
-  ;; Setting up configurations when you load rust-mode
-(add-hook 'rust-mode-hook
+  (use-package rust-mode
+    :requires racer
+    :hook ((rust-mode . racer-activate)
 
-     '(lambda ()
-     ;; Enable racer
-     (racer-activate)
-
-	 ;; Hook in racer with eldoc to provide documentation
-     (racer-turn-on-eldoc)
-
-	 ;; Use flycheck-rust in rust-mode
-     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-
-	 ;; Use company-racer in rust mode
-     (set (make-local-variable 'company-backends) '(company-racer))
-
-	 ;; Key binding to jump to method definition
-     (local-set-key (kbd "M-.") #'racer-find-definition)
-
-	 ;; Key binding to auto complete and indent
-     (local-set-key (kbd "TAB") #'company-indent-or-complete-common))))
-
-(use-package flymake-rust
-  :config
-  (add-hook 'rust-mode-hook 'flymake-rust-load))
+           (flycheck-mode . flycheck-rust-setup))
+    :bind (("M-." . racer-find-definition)
+           ("TAB" . company-indent-or-complete-common)))
 #+END_SRC
 ** Octave
 #+begin_src emacs-lisp
@@ -782,41 +750,34 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+end_src
 ** Ruby
 #+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.ru$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.json.jbuilder$" . enh-ruby-mode))
+  (use-package enh-ruby-mode
+    :interpreter "ruby"
+    :hook (enh-ruby-mode . ruby-electric-mode)
+    :mode (("\\.rb$" . enh-ruby-mode)
+           ("\\.rake$" . enh-ruby-mode)
+           ("Rakefile$" . enh-ruby-mode)
+           ("\\.gemspec$" . enh-ruby-mode)
+           ("\\.ru$" . enh-ruby-mode)
+           ("Gemfile$" . enh-ruby-mode)
+           ("\\.json.jbuilder$" . enh-ruby-mode)))
 
-(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
-(add-hook 'enh-ruby-mode-hook
-	  (lambda ()
-	    ;; (local-set-key (kbd "C-c l") 'rspec-compile-on-line)
-	    ;; (local-set-key (kbd "C-c k") 'rspec-compile-file)
-	    (ruby-electric-mode)
-	    (linum-mode)))
 #+end_src
 ** Clojure
 #+begin_src emacs-lisp
   (use-package cider
-    :defer t)
-  (add-hook 'clojure-mode-hook (lambda () (paredit-mode 1)))
-
-  (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
-
-  (add-hook 'clojure-mode-hook 'paredit-mode)
-  (setq nrepl-hide-special-buffers t
-        cider-repl-pop-to-buffer-on-connect nil
-        cider-show-error-buffer nil
-        cider-repl-popup-stacktraces t
-        cider-lein-command "lein")
+    :requires paredit
+    :hook ((clojure-mode . paredit-mode)
+           (clojure-mode . turn-on-eldoc-mode))
+    :config
+    (setq nrepl-hide-special-buffers t
+          cider-repl-pop-to-buffer-on-connect nil
+          cider-show-error-buffer nil
+          cider-repl-popup-stacktraces t
+          cider-lein-command "lein"))
 #+end_src
 ** Go
 #+BEGIN_SRC emacs-lisp
   (use-package go-mode
-    :defer t
     :bind (:map go-mode-map
                 ("M-." . godef-jump))
     :config
@@ -859,6 +820,13 @@ go get golang.org/x/tools/cmd/oracle
 #+BEGIN_SRC emacs-lisp
   (setf eldoc-idle-delay 0.2
         eldoc-echo-area-use-multiline-p t)
+#+END_SRC
+** Emacs Lisp
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook 'company-mode)
+  (add-hook 'emacs-lisp-mode-hook 'flyspell-prog-mode)
+
 #+END_SRC
 * Special Commands
 ** Flip window split
@@ -951,7 +919,6 @@ go get golang.org/x/tools/cmd/oracle
 
 * Work Tweaks
 Things for my work
-
 #+BEGIN_SRC emacs-lisp
   (when (file-exists-p "jira.el")
     (load "jira.el"))
