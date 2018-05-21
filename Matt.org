@@ -674,12 +674,12 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   (use-package typescript-mode
     :mode "\\.tsx?\\'"
     :hook ((before-save . tide-format-before-save)
-           (typescript-mode . tide-setup)
            (typescript-mode . company-mode)
            (typescript-mode . smartparens-mode)
            (typescript-mode . flycheck-mode)
            (typescript-mode . eldoc-mode)
-           (typescript-mode . tide-hl-identifier-mode))
+           (typescript-mode . tide-hl-identifier-mode)
+           (typescript-mode . tide-setup))
     :requires tide
     :config
     (setq flycheck-check-syntax-automatically '(save mode-enabled)))
