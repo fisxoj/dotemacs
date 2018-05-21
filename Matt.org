@@ -726,8 +726,10 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
     (setq racer-cmd "~/bin/racer"
           racer-rust-src-path "~/Code/rust/src"))
 
+  (use-package flycheck-rust)
+
   (use-package rust-mode
-    :requires racer
+    :requires (racer flycheck-rust)
     :hook ((rust-mode . racer-activate)
 
            (flycheck-mode . flycheck-rust-setup))
