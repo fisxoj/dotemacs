@@ -733,7 +733,8 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
     :hook ((rust-mode . racer-activate)
 
            (flycheck-mode . flycheck-rust-setup))
-    :bind (("M-." . racer-find-definition)
+    :bind (:map rust-mode-map
+           ("M-." . racer-find-definition)
            ("TAB" . company-indent-or-complete-common)))
 #+END_SRC
 ** Octave
