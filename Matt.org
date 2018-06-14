@@ -77,9 +77,9 @@ Allow narrowing buffers, I know how to use it
 Replace the default scratch message with something more fun
 #+BEGIN_SRC emacs-lisp
   (use-package adafruit-wisdom
-    :config
-    (setq inhibit-startup-message t)
-    (setq initial-scratch-message (concat ";; " (adafruit-wisdom-select) "\n")))
+    :custom
+    (inhibit-startup-message t)
+    (initial-scratch-message (concat ";; " (adafruit-wisdom-select) "\n")))
 #+END_SRC
 ** Backup
 
@@ -180,8 +180,8 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
 ** Elfeed
 #+begin_src emacs-lisp
   (use-package elfeed
-    :init
-    (setq elfeed-feeds
+    :custom
+    (elfeed-feeds
         '(;; "http://planet.gnome.org/rss20.xml"
           ("http://mjg59.dreamwidth.org/data/rss" linux) ;; Matthew Garrett
           ("http://sarah.thesharps.us/feed/" linux) ;; Sarah Sharp
@@ -310,9 +310,6 @@ Open pull request URLs in the browser
     (use-package counsel-projectile)
     (projectile-global-mode)
 
-    (setq projectile-enable-caching nil
-          projectile-completion-system 'ivy
-          projectile-switch-project-action 'projectile-vc)
     (defun projectile-cl-project-p ()
       "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
       (-any? (lambda (file)
@@ -329,7 +326,12 @@ Open pull request URLs in the browser
         (lambda (result) (message "Tests finished with result %s" result))
         "CL-USER"))
 
-    (projectile-register-project-type 'common-lisp #'projectile-cl-project-p :test #'projectile-cl-test-function))
+    (projectile-register-project-type 'common-lisp #'projectile-cl-project-p :test #'projectile-cl-test-function)
+
+    :custom
+    (projectile-enable-caching nil)
+    (projectile-completion-system 'ivy)
+    (projectile-switch-project-action 'projectile-vc))
 #+end_src
 ** Multiple Cursors
 #+begin_src emacs-lisp
@@ -382,9 +384,9 @@ Open pull request URLs in the browser
 ** Jira
 #+BEGIN_SRC emacs-lisp
   (use-package org-jira
-    :config
-  (setq jiralib-url "https://themuse.atlassian.net/"
-        org-jira-done-states '("Fertig" "Done" "Closed" "Resolved")))
+    :custom
+    (jiralib-url "https://themuse.atlassian.net/")
+    (org-jira-done-states '("Fertig" "Done" "Closed" "Resolved")))
 #+END_SRC
 ** Smartparens
 #+BEGIN_SRC emacs-lisp
@@ -396,7 +398,17 @@ Open pull request URLs in the browser
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-mode)
 #+END_SRC
-
+** Company
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :custom
+    (company-idle-delay 0)
+    (company-minimum-prefix-length 2))
+#+END_SRC
+** Paredit
+#+BEGIN_SRC emacs-lisp
+  (use-package paredit)
+#+END_SRC
 * Mode Tweaks
 ** Org
 #+begin_src emacs-lisp
@@ -608,22 +620,19 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (load (expand-file-name "~/quicklisp/slime-helper.el"))
     (load (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el"))
 
-    :config
-    (setq inferior-lisp-program "sbcl --dynamic-space-size 2560"
-          slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color ;; slime-company
-                                       ))
-    (slime-setup slime-contribs)))
+    :custom
+    (inferior-lisp-program "sbcl --dynamic-space-size 2560")
+    (slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color slime-company))
 
-    (use-package paredit)
-    (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-    (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1) (company-mode +1)))
-    (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
-    (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
-    (add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
+    :config
+    (slime-setup slime-contribs)
+
+    :hook
+    (lisp-mode . paredit-mode)
+    (slime-mode . paredit-mode)))
 #+end_src
 ** Elm
 #+BEGIN_SRC emacs-lisp
-  (use-package company)
   (use-package elm-mode
     :config
     (add-hook 'flycheck-mode 'flycheck-elm-setup)
@@ -635,16 +644,17 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   (use-package flycheck-mypy
     :config
     (add-to-list 'flycheck-enabled-checkers 'python-mypy)
-    (setq flycheck-python-mypy-args '("--ignore-missing-imports")
-          flycheck-python-flake8-executable "python3.6"
-          flycheck-python-pylint-executable "python3.6"
-          flycheck-python-pycompile-executable "python3.6"))
+
+    :custom
+    (flycheck-python-mypy-args '("--ignore-missing-imports"))
+    (flycheck-python-flake8-executable "python3.6")
+    (flycheck-python-pylint-executable "python3.6")
+    (flycheck-python-pycompile-executable "python3.6"))
 
   (use-package fill-column-indicator
     :config
     ;; Override FCI in babel block so it doesn't fuck up formatting there
     (defun fci-mode-override-advice (&rest args))
-    (use-package org)
     (advice-add 'org-html-fontify-code :around
                 (lambda (fun &rest args)
                   (advice-add 'fci-mode :override #'fci-mode-override-advice)
@@ -659,9 +669,10 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     :hook ((elpy-mode . flycheck-mode)
            (elpy-mode . fci-mode))
     :diminish (elpy-mode . "☕")
+    :custom
+    (elpy-rpc-backend "jedi")
+    (elpy-rpc-python-command "python3.6")
     :config
-    (setq elpy-rpc-backend "jedi"
-          elpy-rpc-python-command "python3.6")
     (elpy-enable))
 #+END_SRC
 ** Coffeescript
@@ -680,9 +691,9 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
            (typescript-mode . eldoc-mode)
            (typescript-mode . tide-hl-identifier-mode)
            (typescript-mode . tide-setup))
-    :requires tide
-    :config
-    (setq flycheck-check-syntax-automatically '(save mode-enabled)))
+    :after tide
+    :custom
+    (flycheck-check-syntax-automatically '(save mode-enabled)))
 #+END_SRC
 ** Web
 #+begin_src emacs-lisp
@@ -703,14 +714,14 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     :hook ((web-mode . rainbow-mode)
            (web-mode . flyspell-prog-mode))
     :requires rainbow-mode
+    :custom
+    (web-mode-engines-alist '(("django" . "\\.html")))
+    (web-mode-markup-indent-offset 4)
+    (web-mode-code-indent-offset 0)
+    (web-mode-css-indent-offset 4)
+
     :config
-    (setq web-mode-engines-alist '(("django" . "\\.html")))
-
     (setq-default indent-tabs-mode nil)
-
-    (setq web-mode-markup-indent-offset 4
-          web-mode-code-indent-offset 0
-          web-mode-css-indent-offset 4)
 
     (defadvice web-mode-highlight-part (around tweak-jsx activate)
       (if (equal web-mode-content-type "jsx")
@@ -722,17 +733,18 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+BEGIN_SRC emacs-lisp
   (use-package racer
-    :config
-    (setq racer-cmd "~/bin/racer"
-          racer-rust-src-path "~/Code/rust/src"))
+    :custom
+    (racer-cmd "~/bin/racer")
+    (racer-rust-src-path "~/Code/rust/src"))
 
   (use-package flycheck-rust)
 
   (use-package rust-mode
-    :requires (racer flycheck-rust)
+    :after (racer flycheck-rust)
     :hook ((rust-mode . racer-activate)
-
-           (flycheck-mode . flycheck-rust-setup))
+           (rust-mode . flycheck-rust-setup)
+           (rust-mode . smartparens-mode)
+           (rust-mode . company-mode))
     :bind (("M-." . racer-find-definition)
            ("TAB" . company-indent-or-complete-common)))
 #+END_SRC
@@ -770,12 +782,12 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
     :requires paredit
     :hook ((clojure-mode . paredit-mode)
            (clojure-mode . turn-on-eldoc-mode))
-    :config
-    (setq nrepl-hide-special-buffers t
-          cider-repl-pop-to-buffer-on-connect nil
-          cider-show-error-buffer nil
-          cider-repl-popup-stacktraces t
-          cider-lein-command "lein"))
+    :custom
+    (nrepl-hide-special-buffers t)
+    (cider-repl-pop-to-buffer-on-connect nil)
+    (cider-show-error-buffer nil)
+    (cider-repl-popup-stacktraces t)
+    (cider-lein-command "lein"))
 #+end_src
 ** Go
 #+BEGIN_SRC emacs-lisp
@@ -828,7 +840,7 @@ go get golang.org/x/tools/cmd/oracle
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook 'company-mode)
   (add-hook 'emacs-lisp-mode-hook 'flyspell-prog-mode)
-
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 #+END_SRC
 * Special Commands
 ** Flip window split
