@@ -668,7 +668,8 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   (use-package elpy
     :requires (flycheck-mypy fill-column-indicator)
     :hook ((elpy-mode . flycheck-mode)
-           (elpy-mode . fci-mode))
+           (elpy-mode . fci-mode)
+           (python-mode . elpy-mode))
     :diminish (elpy-mode . "☕")
     :custom
     (elpy-rpc-backend "jedi")
