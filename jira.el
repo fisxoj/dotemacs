@@ -4,7 +4,7 @@
 
 (defun fisxoj/muse/create-branch-for-issue (issue-id start-point branch-type)
   (interactive (list (read-string "Jira Issue ID: ")
-                     (read-string "Start from: " "develop")
+                     (magit-read-branch-or-commit "Start from" "develop")
                      (read-string "Git Flow branch type: " "feature")))
 
   (let* ((issue        (jiralib-get-issue issue-id))
