@@ -621,7 +621,8 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (use-package slime
     :init
     (load (expand-file-name "~/quicklisp/slime-helper.el"))
-    (load (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el"))
+    (when (file-exists-p (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el"))
+      (load (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el")))
 
     :custom
     (inferior-lisp-program "sbcl --dynamic-space-size 2560")
