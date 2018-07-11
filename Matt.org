@@ -400,6 +400,8 @@ Open pull request URLs in the browser
 #+END_SRC
 ** Company
 #+BEGIN_SRC emacs-lisp
+  (use-package company-quickhelp
+    :hook company-mode)
   (use-package company
     :custom
     (company-idle-delay 0)
