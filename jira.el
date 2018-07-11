@@ -13,6 +13,7 @@
 
     (magit--with-safe-default-directory "~/Code/themuse/"
       (magit-branch-checkout start-point)
-      (magit-pull-from-upstream (magit-pull-arguments))
+      (when (magit-get-upstream-branch (magit-get-current-branch))
+        (magit-pull-from-upstream (magit-pull-arguments)))
       (magit-branch-and-checkout (concat branch-type "/" (s-upcase issue-id) "-" summary-slug)
                                  start-point))))
