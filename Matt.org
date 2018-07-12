@@ -906,9 +906,9 @@ go get golang.org/x/tools/cmd/oracle
     (defun fisxoj/region-md-to-org (start end)
       (interactive "r")
       (let ((org-content (pandoc-convert-stdio (buffer-substring start end)
-                                               "markdown_github" "org")))
+                                               "gfm" "org")))
         (delete-region start end)
-        (insert-string org-content))))
+        (insert org-content))))
 #+END_SRC
 
 ** Dealing with different monitor pixel densities
