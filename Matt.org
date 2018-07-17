@@ -400,13 +400,18 @@ Open pull request URLs in the browser
 #+END_SRC
 ** Company
 #+BEGIN_SRC emacs-lisp
-  (use-package company-quickhelp
-    :hook company-mode)
   (use-package company
     :custom
-    (company-idle-delay 0)
+    (company-begin-commands '(self-insert-command))
+    (company-idle-delay 0.1)
     (company-minimum-prefix-length 2)
     (company-tooltip-align-annotations t))
+
+  (use-package company-box
+    :diminish
+    :hook company-mode
+    :custom
+    (company-box-doc-delay 0.0))
 #+END_SRC
 ** Paredit
 #+BEGIN_SRC emacs-lisp
