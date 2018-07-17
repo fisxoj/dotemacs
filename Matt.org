@@ -617,23 +617,25 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 #+end_src
 ** Lisp
 #+begin_src emacs-lisp
-  (when (file-exists-p (expand-file-name "~/quicklisp/slime-helper.el"))
-    (use-package slime
-    :init
-    (load (expand-file-name "~/quicklisp/slime-helper.el"))
-    (when (file-exists-p (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el"))
-      (load (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el")))
+  ;; (when (file-exists-p (expand-file-name "~/quicklisp/slime-helper.el"))
+  ;;   (use-package slime
+  ;;   :init
+  ;;   (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  ;;   (when (file-exists-p (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el"))
+  ;;     (load (expand-file-name "~/.emacs.d/slime-repl-ansi-color.el")))
 
-    :custom
-    (inferior-lisp-program "sbcl --dynamic-space-size 2560")
-    (slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color slime-company))
+  ;;   :custom
+  ;;   (inferior-lisp-program "sbcl --dynamic-space-size 2560")
+  ;;   (slime-contribs '(slime-fancy slime-banner slime-repl-ansi-color slime-company))
 
-    :config
-    (slime-setup slime-contribs)
+  ;;   :config
+  ;;   (slime-setup slime-contribs)
 
-    :hook
-    (lisp-mode . paredit-mode)
-    (slime-mode . paredit-mode)))
+  ;;   :hook
+  ;;   (lisp-mode . paredit-mode)
+  ;;   (slime-mode . paredit-mode)))
+
+  (use-package sly)
 #+end_src
 ** Elm
 #+BEGIN_SRC emacs-lisp
