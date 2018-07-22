@@ -345,7 +345,7 @@ Open pull request URLs in the browser
     :bind (:map projectile-command-map
                 (("s s" . counsel-projectile-rg)))
     :init
-    (projectile-global-mode)
+    (projectile-mode)
 
     :config
     (use-package projectile-ripgrep)
