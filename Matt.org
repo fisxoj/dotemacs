@@ -249,6 +249,40 @@ Taken from [[https://github.com/skeeto/elfeed/issues/34#issuecomment-158824561][
 * Meta-Modes
 Projects, SVC, etc
 
+** Ivy
+https://www.reddit.com/r/emacs/comments/910pga/tip_how_to_use_ivy_and_its_utilities_in_your/
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :defer 0.1
+    :diminish
+    :bind (("C-c C-r" . ivy-resume)
+           ("C-x b" . ivy-switch-buffer)
+           ("C-x B" . ivy-switch-buffer-other-window))
+    :custom
+    (ivy-count-format "(%d/%d) ")
+    (ivy-display-style 'fancy)
+    (ivy-use-virtual-buffers t)
+    :config
+    (ivy-mode))
+
+  (use-package ivy-rich
+    :after ivy
+    :custom
+    (ivy-virtual-abbreviate 'full
+                            ivy-rich-switch-buffer-align-virtual-buffer t
+                            ivy-rich-switch-buffer-transformer 'abbrev)
+    :config
+    (ivy-set-display-transformer 'ivy-switch-buffer
+                                 'ivy-rich-switch-buffer-transformer))
+#+END_SRC
+** Counsel
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel
+    :after ivy
+    :bind (("C-x C-f" . counsel-find-file)
+           ("M-x" . counsel-M-x)
+           ("M-y" . counsel-yank-pop)))
+#+END_SRC
 ** Magit
 #+begin_src emacs-lisp
   (use-package magit
@@ -345,9 +379,10 @@ Open pull request URLs in the browser
 
 ** Swiper
 #+BEGIN_SRC emacs-lisp
-(use-package swiper
- :diminish ivy-mode
- :init (ivy-mode 1))
+  (use-package swiper
+    :after ivy
+    :bind (("C-s" . swiper)
+           ("C-r" . swiper)))
 
 #+END_SRC
 ** Dim
