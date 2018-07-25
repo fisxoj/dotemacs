@@ -721,7 +721,9 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     (elpy-rpc-backend "jedi")
     (elpy-rpc-python-command "python3.6")
     :config
-    (elpy-enable))
+    (elpy-enable)
+    (add-to-list 'flycheck-disabled-checkers 'flycheck-pylint)
+    (add-to-list 'flycheck-disabled-checkers 'flycheck-pycompile))
 #+END_SRC
 ** Coffeescript
 #+BEGIN_SRC emacs-lisp
