@@ -334,8 +334,9 @@ Open pull request URLs in the browser
 ** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
-    :bind (:map projectile-command-map
-                (("s s" . counsel-projectile-rg)))
+    :bind (("C-c p" . projectile-command-map)
+           :map projectile-command-map
+           (("s s" . counsel-projectile-rg)))
     :init
     (projectile-global-mode)
 
