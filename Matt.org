@@ -353,13 +353,21 @@ Open pull request URLs in the browser
 
     (defun projectile-cl-test-function ()
       "Calls into slime to run the current project's tests with asdf."
-      (message "Testing %s in slime..." (projectile-project-name))
-      (slime-eval-async
-          `(asdf:test-system ,(projectile-project-name))
-        (lambda (result) (message "Tests finished with result %s" result))
-        "CL-USER"))
+      (multiple-value-bind (repl-name async-eval)
+          (cond
+           ((require 'sly nil t) '("sly" sly-eval-async))
+           ((require 'slime nili t) '("slime" slime-eval-async))
+           (t (error "Neither sly nor slime seems to be installed.")))
+        (message "Testing %s in %s..." (projectile-project-name) repl-name)
+        (funcall
+         async-eval
+         `(asdf:test-system ,(projectile-project-name))
+         (lambda (result) (message "Tests finished with result %s" result))
+         "CL-USER")))
 
-    (projectile-register-project-type 'common-lisp #'projectile-cl-project-p :test #'projectile-cl-test-function)
+    (projectile-register-project-type 'common-lisp
+                                      #'projectile-cl-project-p
+                                      :test #'projectile-cl-test-function)
 
     :custom
     (projectile-enable-caching nil)
