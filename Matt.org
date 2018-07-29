@@ -96,6 +96,14 @@ Replace the default scratch message with something more fun
   (use-package base16-theme
     :config
     (load-theme 'base16-oceanicnext t))
+
+  (defun fisxoj/day-theme ()
+    (interactive)
+    (load-theme 'base16-default-light t))
+
+  (defun fisxoj/night-theme ()
+    (interactive)
+    (load-theme 'base16-oceanicnext t))
 #+end_src
 ** Font
 ;; http://sourcefoundry.org/hack/
