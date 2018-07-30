@@ -337,11 +337,8 @@ Open pull request URLs in the browser
     :bind (("C-c p" . projectile-command-map)
            :map projectile-command-map
            (("s s" . counsel-projectile-rg)))
-    :init
-    (projectile-global-mode)
-
     :config
-    (projectile-global-mode)
+    (projectile-mode)
 
     (defun projectile-cl-project-p ()
       "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
