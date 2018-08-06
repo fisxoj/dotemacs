@@ -342,53 +342,50 @@ Open pull request URLs in the browser
 #+END_SRC
 ** Projectile
 #+begin_src emacs-lisp
-    (use-package projectile
-      :bind (("C-c p" . projectile-command-map)
-             :map projectile-command-map
-             (("s s" . counsel-projectile-rg)))
-      :init
-      (projectile-mode)
+  (use-package projectile
+    :bind (("C-c p" . projectile-command-map)
+           :map projectile-command-map
+           (("s s" . counsel-projectile-rg)))
+    :init
+    (projectile-mode)
 
-      :config
-      (use-package projectile-ripgrep)
-      (use-package counsel-projectile)
+    :config
+    (defun projectile-cl-project-p ()
+      "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
+      (-any? (lambda (file)
+               (let ((extension (file-name-extension file)))
+                 (or (string= extension "lisp")
+                     (string= extension "cl"))))
+             (projectile-current-project-files)))
 
-      (defun projectile-cl-project-p ()
-        "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
-        (-any? (lambda (file)
-                 (let ((extension (file-name-extension file)))
-                   (or (string= extension "lisp")
-                       (string= extension "cl"))))
-               (projectile-current-project-files)))
+    (defun projectile-cl-test-function ()
+      "Calls into slime to run the current project's tests with asdf."
+      (multiple-value-bind (repl-name async-eval)
+          (cond
+           ((require 'sly nil t) '("sly" sly-eval-async))
+           ((require 'slime nili t) '("slime" slime-eval-async))
+           (t (error "Neither sly nor slime seems to be installed.")))
+        (message "Testing %s in %s..." (projectile-project-name) repl-name)
+        (funcall
+         async-eval
+         `(asdf:test-system ,(projectile-project-name))
+         (lambda (result) (message "Tests finished with result %s" result))
+         "CL-USER")))
 
-      (defun projectile-cl-test-function ()
-        "Calls into slime to run the current project's tests with asdf."
-        (multiple-value-bind (repl-name async-eval)
-            (cond
-             ((require 'sly nil t) '("sly" sly-eval-async))
-             ((require 'slime nili t) '("slime" slime-eval-async))
-             (t (error "Neither sly nor slime seems to be installed.")))
-          (message "Testing %s in %s..." (projectile-project-name) repl-name)
-          (funcall
-           async-eval
-           `(asdf:test-system ,(projectile-project-name))
-           (lambda (result) (message "Tests finished with result %s" result))
-           "CL-USER")))
+    (projectile-register-project-type 'common-lisp
+                                      #'projectile-cl-project-p
+                                      :test #'projectile-cl-test-function)
 
-      (projectile-register-project-type 'common-lisp
-                                        #'projectile-cl-project-p
-                                        :test #'projectile-cl-test-function)
+    :custom
+    (projectile-enable-caching nil)
+    (projectile-completion-system 'ivy)
+    (projectile-switch-project-action 'projectile-vc))
 
-      :custom
-      (projectile-enable-caching nil)
-      (projectile-completion-system 'ivy)
-      (projectile-switch-project-action 'projectile-vc))
+  (use-package projectile-ripgrep
+    :after projectile)
 
-    (use-package projectile-ripgrep
-      :after projectile)
-
-    (use-package counsel-projectile
-      :after projectile)
+  (use-package counsel-projectile
+    :after projectile)
 #+end_src
 ** Multiple Cursors
 #+begin_src emacs-lisp
@@ -703,7 +700,10 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 
   (use-package sly
     :custom
-    (inferior-lisp-program "sbcl"))
+    (inferior-lisp-program "sbcl")
+    :hook
+    ((lisp-mode . paredit-mode)
+     (sly-editing-mode . paredit-mode)))
 
   (use-package sly-repl-ansi-color
     :after sly)
