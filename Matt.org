@@ -452,9 +452,9 @@ Open pull request URLs in the browser
 
   (use-package company-box
     :diminish
-    :hook company-mode
+    :hook (company-mode . company-box-mode)
     :custom
-    (company-box-doc-delay 0.0))
+    (company-box-doc-delay 0.2))
 #+END_SRC
 ** Paredit
 #+BEGIN_SRC emacs-lisp
