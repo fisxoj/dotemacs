@@ -460,7 +460,8 @@ Open pull request URLs in the browser
 #+BEGIN_SRC emacs-lisp
   (use-package paredit
     :hook ((lisp-mode . paredit-mode)
-           (emacs-lisp-mode . paredit-mode)))
+           (emacs-lisp-mode . paredit-mode)
+           (sly-mrepl-mode . paredit-mode)))
 #+END_SRC
 * Mode Tweaks
 ** Org
@@ -685,7 +686,9 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   ;;   (lisp-mode . paredit-mode)
   ;;   (slime-mode . paredit-mode)))
 
-  (use-package sly)
+  (use-package sly
+    :custom
+    (inferior-lisp-program "sbcl"))
 #+end_src
 ** Elm
 #+BEGIN_SRC emacs-lisp
