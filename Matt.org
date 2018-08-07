@@ -458,7 +458,9 @@ Open pull request URLs in the browser
 #+END_SRC
 ** Paredit
 #+BEGIN_SRC emacs-lisp
-  (use-package paredit)
+  (use-package paredit
+    :hook ((lisp-mode . paredit-mode)
+           (emacs-lisp-mode . paredit-mode)))
 #+END_SRC
 * Mode Tweaks
 ** Org
