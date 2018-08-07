@@ -704,6 +704,18 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   (use-package sly
     :custom
     (inferior-lisp-program "sbcl"))
+
+  (use-package sly-repl-ansi-color
+    :after sly)
+
+  (use-package sly-named-readtables
+    :after sly)
+
+  (use-package sly-macrostep
+    :after sly)
+
+  (use-package sly-quicklisp
+    :after sly)
 #+end_src
 ** Elm
 #+BEGIN_SRC emacs-lisp
