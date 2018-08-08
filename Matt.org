@@ -96,6 +96,14 @@ Replace the default scratch message with something more fun
   (use-package base16-theme
     :config
     (load-theme 'base16-oceanicnext t))
+
+  (defun fisxoj/day-theme ()
+    (interactive)
+    (load-theme 'base16-default-light t))
+
+  (defun fisxoj/night-theme ()
+    (interactive)
+    (load-theme 'base16-oceanicnext t))
 #+end_src
 ** Font
 ;; http://sourcefoundry.org/hack/
@@ -333,49 +341,53 @@ Open pull request URLs in the browser
 #+END_SRC
 ** Projectile
 #+begin_src emacs-lisp
-  (use-package projectile
-    :bind (("C-c p" . projectile-command-map)
-           :map projectile-command-map
-           (("s s" . counsel-projectile-rg)))
-    :config
-    (projectile-mode)
+    (use-package projectile
+      :bind (("C-c p" . projectile-command-map)
+             :map projectile-command-map
+             (("s s" . counsel-projectile-rg)))
+      :init
+      (projectile-mode)
 
-    (defun projectile-cl-project-p ()
-      "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
-      (-any? (lambda (file)
-               (let ((extension (file-name-extension file)))
-                 (or (string= extension "lisp")
-                     (string= extension "cl"))))
-             (projectile-current-project-files)))
+      :config
+      (use-package projectile-ripgrep)
+      (use-package counsel-projectile)
 
-    (defun projectile-cl-test-function ()
-      "Calls into slime to run the current project's tests with asdf."
-      (multiple-value-bind (repl-name async-eval)
-          (cond
-           ((require 'sly nil t) '("sly" sly-eval-async))
-           ((require 'slime nili t) '("slime" slime-eval-async))
-           (t (error "Neither sly nor slime seems to be installed.")))
-        (message "Testing %s in %s..." (projectile-project-name) repl-name)
-        (funcall
-         async-eval
-         `(asdf:test-system ,(projectile-project-name))
-         (lambda (result) (message "Tests finished with result %s" result))
-         "CL-USER")))
+      (defun projectile-cl-project-p ()
+        "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
+        (-any? (lambda (file)
+                 (let ((extension (file-name-extension file)))
+                   (or (string= extension "lisp")
+                       (string= extension "cl"))))
+               (projectile-current-project-files)))
 
-    (projectile-register-project-type 'common-lisp
-                                      #'projectile-cl-project-p
-                                      :test #'projectile-cl-test-function)
+      (defun projectile-cl-test-function ()
+        "Calls into slime to run the current project's tests with asdf."
+        (multiple-value-bind (repl-name async-eval)
+            (cond
+             ((require 'sly nil t) '("sly" sly-eval-async))
+             ((require 'slime nili t) '("slime" slime-eval-async))
+             (t (error "Neither sly nor slime seems to be installed.")))
+          (message "Testing %s in %s..." (projectile-project-name) repl-name)
+          (funcall
+           async-eval
+           `(asdf:test-system ,(projectile-project-name))
+           (lambda (result) (message "Tests finished with result %s" result))
+           "CL-USER")))
 
-    :custom
-    (projectile-enable-caching nil)
-    (projectile-completion-system 'ivy)
-    (projectile-switch-project-action 'projectile-vc))
+      (projectile-register-project-type 'common-lisp
+                                        #'projectile-cl-project-p
+                                        :test #'projectile-cl-test-function)
 
-  (use-package projectile-ripgrep
-    :after projectile)
+      :custom
+      (projectile-enable-caching nil)
+      (projectile-completion-system 'ivy)
+      (projectile-switch-project-action 'projectile-vc))
 
-  (use-package counsel-projectile
-    :after projectile)
+    (use-package projectile-ripgrep
+      :after projectile)
+
+    (use-package counsel-projectile
+      :after projectile)
 #+end_src
 ** Multiple Cursors
 #+begin_src emacs-lisp
@@ -454,13 +466,16 @@ Open pull request URLs in the browser
 
   (use-package company-box
     :diminish
-    :hook company-mode
+    :hook (company-mode . company-box-mode)
     :custom
-    (company-box-doc-delay 0.0))
+    (company-box-doc-delay 0.2))
 #+END_SRC
 ** Paredit
 #+BEGIN_SRC emacs-lisp
-  (use-package paredit)
+  (use-package paredit
+    :hook ((lisp-mode . paredit-mode)
+           (emacs-lisp-mode . paredit-mode)
+           (sly-mrepl-mode . paredit-mode)))
 #+END_SRC
 * Mode Tweaks
 ** Org
@@ -685,7 +700,9 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
   ;;   (lisp-mode . paredit-mode)
   ;;   (slime-mode . paredit-mode)))
 
-  (use-package sly)
+  (use-package sly
+    :custom
+    (inferior-lisp-program "sbcl"))
 #+end_src
 ** Elm
 #+BEGIN_SRC emacs-lisp
