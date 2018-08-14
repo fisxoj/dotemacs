@@ -212,6 +212,7 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
           ("https://jvns.ca/atom.xml" ruby rust) ;; Julia Evans
           ("http://jensimmons.com/blog.xml" web design) ;; Jen Simmons (Mozilla)
           ("http://zerolib.com/feed.xml" lisp emacs) ;; John Jacobsen
+          ("http://irreal.org/blog/?feed=rss2" emacs) ;; Irreal
           ))
 
     :bind (("C-x w" . elfeed)))
