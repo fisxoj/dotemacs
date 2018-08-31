@@ -282,8 +282,7 @@ https://www.reddit.com/r/emacs/comments/910pga/tip_how_to_use_ivy_and_its_utilit
                             ivy-rich-switch-buffer-align-virtual-buffer t
                             ivy-rich-switch-buffer-transformer 'abbrev)
     :config
-    (ivy-set-display-transformer 'ivy-switch-buffer
-                                 'ivy-rich-switch-buffer-transformer))
+    (ivy-rich-mode))
 #+END_SRC
 ** Counsel
 #+BEGIN_SRC emacs-lisp
