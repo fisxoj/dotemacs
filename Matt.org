@@ -486,15 +486,11 @@ Open pull request URLs in the browser
 #+end_src
 *** Presentation
 #+begin_src emacs-lisp
-  (use-package org-bullets
-    :defer t)
   (add-hook 'org-mode-hook
             (lambda ()
               (writegood-mode)
-              (flyspell-mode)
-              (org-bullets-mode)))
-  (setq org-startup-indented t
-        org-ellipsis "⤵"
+              (flyspell-mode)))
+  (setq org-ellipsis "⤵"
         org-startup-with-inline-images t)
 #+end_src
 *** Babel
