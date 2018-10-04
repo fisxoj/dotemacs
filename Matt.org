@@ -5,7 +5,7 @@
 ** Changing cases
 #+BEGIN_SRC emacs-lisp
   (use-package string-inflection
-    :bind (("C-c i" . string-inflection-cycle)))
+    :bind (("C-c I" . string-inflection-cycle)))
 #+END_SRC
 * Diminish
 #+BEGIN_SRC emacs-lisp
@@ -763,7 +763,7 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     :config
     (elpy-enable)
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (setq-default flycheck-disabled-checkers '(flycheck-pylint flycheck-pycompile)))
+    (setq-default flycheck-disabled-checkers '(flycheck-flake8 flycheck-pycompile)))
 #+END_SRC
 ** Coffeescript
 #+BEGIN_SRC emacs-lisp
