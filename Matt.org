@@ -733,9 +733,9 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
 
     :custom
     (flycheck-python-mypy-args '("--ignore-missing-imports"))
-    (flycheck-python-flake8-executable "python3.6")
-    (flycheck-python-pylint-executable "python3.6")
-    (flycheck-python-pycompile-executable "python3.6"))
+    (flycheck-python-flake8-executable "python3")
+    (flycheck-python-pylint-executable "python3")
+    (flycheck-python-pycompile-executable "python3"))
 
   (use-package fill-column-indicator
     :config
@@ -759,7 +759,7 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     :diminish (elpy-mode . "☕")
     :custom
     (elpy-rpc-backend "jedi")
-    (elpy-rpc-python-command "python3.6")
+    (elpy-rpc-python-command "python3")
     :config
     (elpy-enable)
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
