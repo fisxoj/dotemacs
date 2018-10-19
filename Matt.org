@@ -933,6 +933,15 @@ go get golang.org/x/tools/cmd/oracle
   (add-hook 'emacs-lisp-mode-hook 'flyspell-prog-mode)
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 #+END_SRC
+** Terraform
+   #+BEGIN_SRC emacs-lisp
+     (use-package terraform-mode
+       :hook ((terraform-mode . company-mode)
+	      (terraform-mode . smartparens-mode)))
+
+     (use-package company-terraform
+       :init (company-terraform-init))
+   #+END_SRC
 * Special Commands
 ** Flip window split
 #+BEGIN_SRC emacs-lisp
