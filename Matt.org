@@ -704,7 +704,9 @@ https://github.com/graehl/.emacs.d/commit/8111e8648f12c2e7b43d8e9245cc7d753739a6
     :hook
     ((lisp-mode . paredit-mode)
      (lisp-mode . company-mode)
-     (sly-editing-mode . paredit-mode)))
+     (sly-editing-mode . paredit-mode))
+    :init
+    (push 'sly-repl-ansi-color sly-contribs))
 
   (use-package sly-repl-ansi-color
     :after sly)
