@@ -768,6 +768,7 @@ Store link
     :hook
     ((lisp-mode . paredit-mode)
      (lisp-mode . company-mode)
+     (lisp-mode . flyspell-prog-mode)
      (sly-editing-mode . paredit-mode))
     :init
     (push 'sly-repl-ansi-color sly-contribs))
