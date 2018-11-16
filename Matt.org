@@ -478,6 +478,12 @@ Open pull request URLs in the browser
            (emacs-lisp-mode . paredit-mode)
            (sly-mrepl-mode . paredit-mode)))
 #+END_SRC
+** Editorconfig
+   #+BEGIN_SRC emacs-lisp
+     (use-package editorconfig
+       :config
+       (editorconfig-mode 1))
+   #+END_SRC
 * Mode Tweaks
 ** Org
 #+begin_src emacs-lisp
