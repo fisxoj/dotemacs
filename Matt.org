@@ -951,6 +951,10 @@ go get golang.org/x/tools/cmd/oracle
      (use-package company-terraform
        :init (company-terraform-init))
    #+END_SRC
+** Dockerfile
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode)
+#+END_SRC
 * Special Commands
 ** Flip window split
 #+BEGIN_SRC emacs-lisp
