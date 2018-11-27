@@ -465,11 +465,12 @@ Open pull request URLs in the browser
     (company-minimum-prefix-length 2)
     (company-tooltip-align-annotations t))
 
-  (use-package company-box
-    :diminish
-    :hook (company-mode . company-box-mode)
-    :custom
-    (company-box-doc-delay 0.2))
+  (when (>= emacs-major-version 26)
+    (use-package company-box
+      :diminish
+      :hook company-mode
+      :custom
+      (company-box-doc-delay 0.2)))
 #+END_SRC
 ** Paredit
 #+BEGIN_SRC emacs-lisp
