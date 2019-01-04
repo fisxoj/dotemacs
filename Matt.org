@@ -467,6 +467,7 @@ Open pull request URLs in the browser
 
   (when (>= emacs-major-version 26)
     (use-package company-box
+      :after company-mode
       :diminish
       :hook company-mode
       :custom
