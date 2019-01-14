@@ -40,10 +40,13 @@ Many of these things are borrowed from [[http://pages.sachachua.com/.emacs.d/Sac
 #+begin_src emacs-lisp
   ;; No splash screen!  Why did it take you so long to add this?
   (setq inhibit-startup-message t
-        inhibit-startup-screen t)
+	inhibit-startup-screen t)
 
   ;; No toolbar
   (tool-bar-mode -1)
+
+  ;; Never tabs by default
+  (setq-default indent-tabs-mode nil)
 
   ;; Match parens
   (show-paren-mode 1)
@@ -63,11 +66,11 @@ Many of these things are borrowed from [[http://pages.sachachua.com/.emacs.d/Sac
 
   ;; Don't bg emacs on C-z
   (global-set-key (kbd "C-z")
-                (lambda ()
-                  (interactive)
-                  (message "Not sending emacs to background, you fat-fingered dummy!")))
+		  (lambda ()
+		    (interactive)
+		    (message "Not sending emacs to background, you fat-fingered dummy!")))
 
-(setf confirm-kill-emacs 'y-or-n-p)
+  (setf confirm-kill-emacs 'y-or-n-p)
 #+end_src
 
 Allow narrowing buffers, I know how to use it
@@ -136,8 +139,8 @@ If I'm typing another alphabet, it's probably japanese
 ** Saving
 Delete trailing whitespace
 #+begin_src emacs-lisp
-;; http://ergoemacs.org/emacs/elisp_compact_empty_lines.htmlrevi
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+  ;; http://ergoemacs.org/emacs/elisp_compact_empty_lines.htmlrevi
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 ** Window Decorations
 #+begin_src emacs-lisp
