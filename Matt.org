@@ -729,7 +729,7 @@ Store link
    (use-package tide)
    (use-package typescript-mode
      :mode "\\.tsx?\\'"
-     :hook ((before-save . (lambda () (when (equals major-mode 'typescript-mode) tide-format-before-save)))
+     :hook ((before-save . (lambda () (when (equal major-mode 'typescript-mode) tide-format-before-save)))
             (typescript-mode . company-mode)
             (typescript-mode . smartparens-mode)
             (typescript-mode . flycheck-mode)
