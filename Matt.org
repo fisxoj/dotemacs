@@ -974,25 +974,25 @@ go get golang.org/x/tools/cmd/oracle
 ** Scala
    Setup for language server scala [[https://github.com/rossabaker/lsp-scala][lsp-scala]].
    #+BEGIN_SRC emacs-lisp
-     (use-package scala-mode)
+     (use-package scala-mode
+       :hook ((scala-mode . smartparens-mode)))
 
      (use-package lsp-mode)
 
      (use-package lsp-ui
        :hook (lsp-mode . lsp-ui-mode)
        :config
-       (lsp-ui-flycheck-add-mode 'scala-mode))
+       (push 'lsp-ui-flycheck flycheck-checkers))
 
      (use-package lsp-scala
        :load-path "~/.emacs.d/lsp-scala/"
        :after scala-mode
        :demand t
-       :hook ((scala-mode . lsp)
-	      (scala-mode . flycheck-mode))
+       :hook ((scala-mode . lsp))
        :init
+       (lsp-ui-flycheck-add-mode 'scala-mode)
        (setq lsp-scala-server-command "~/bin/metals-emacs")
        (add-hook 'scala-mode-hook (lambda ()
-				    (flymake-mode -1)
 				    (lsp-ui-flycheck-enable +1))))
 
      (use-package sbt-mode
