@@ -571,7 +571,7 @@ Store link
 *** Export
 #+begin_src emacs-lisp
 (use-package ox-html5slide)
-(use-package ox-reveal)
+(use-package org-re-reveal)
 #+end_src
 **** LateX
 #+begin_src emacs-lisp
