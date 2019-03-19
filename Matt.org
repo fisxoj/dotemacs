@@ -968,7 +968,6 @@ go get golang.org/x/tools/cmd/oracle
        (push 'lsp-ui-flycheck flycheck-checkers))
 
      (use-package lsp-scala
-       :load-path "~/.emacs.d/lsp-scala/"
        :after scala-mode
        :demand t
        :hook ((scala-mode . lsp))
