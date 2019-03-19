@@ -837,22 +837,11 @@ Store link
 ** Rust
 Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+BEGIN_SRC emacs-lisp
-    (use-package racer
-      :custom
-      (racer-cmd "~/bin/racer")
-      (racer-rust-src-path "~/Code/rust/src"))
-
-    (use-package flycheck-rust)
-
-    (use-package rust-mode
-      :after (racer flycheck-rust)
-      :hook ((rust-mode . racer-activate)
-             (rust-mode . flycheck-rust-setup)
-             (rust-mode . smartparens-mode)
-             (rust-mode . company-mode))
-      :bind (:map rust-mode-map
-             ("M-." . racer-find-definition)
-             ("TAB" . company-indent-or-complete-common)))
+  (use-package rust-mode
+    :after (racer lsp-mode)
+    :hook ((rust-mode . lsp)
+           (rust-mode . smartparens-mode)
+           (rust-mode . company-mode)))
 #+END_SRC
 ** Octave
 #+begin_src emacs-lisp
