@@ -92,7 +92,6 @@ Replace the default scratch message with something more fun
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  (use-package color-theme)
   (use-package base16-theme
     :config
     (load-theme 'base16-oceanicnext t))
