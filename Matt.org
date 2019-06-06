@@ -772,6 +772,7 @@ Store link
     :hook
     ((lisp-mode . paredit-mode)
      (lisp-mode . company-mode)
+     (sly-editing-mode . company-mode)
      (sly-editing-mode . paredit-mode))
     :init
     (push 'sly-repl-ansi-color sly-contribs))
