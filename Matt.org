@@ -94,7 +94,7 @@ Replace the default scratch message with something more fun
 #+begin_src emacs-lisp
   (use-package base16-theme
     :config
-    (load-theme 'base16-oceanicnext t))
+    (load-theme 'base16-eighties t))
 
   (defun fisxoj/day-theme ()
     (interactive)
