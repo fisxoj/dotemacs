@@ -971,8 +971,8 @@ go get golang.org/x/tools/cmd/oracle
    Setup language server for scala.
    #+BEGIN_SRC emacs-lisp
      (use-package scala-mode
-       :hook (smartparens-mode
-              eglot-ensure)
+       :hook ((scala-mode . smartparens-mode)
+              (scala-mode . eglot-ensure))
        :config
        (add-to-list 'eglot-server-programs '(scala-mode . ("metals-emacs"))))
 
