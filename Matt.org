@@ -725,12 +725,12 @@ Store link
     (flycheck-add-mode 'javascript-eslint 'web-mode)
     (add-hook 'web-mode-hook (lambda ()
                                (when (find web-mode-content-type '("jsx" "javascript") :test 'equal)
-                                 (tide-mode +1)
+                                 ;; (tide-mode +1)
                                  (company-mode +1)
-                                 (tide-hl-identifier-mode +1)
+                                 ;; (tide-hl-identifier-mode +1)
                                  (flycheck-mode +1)
                                  (eldoc-mode +1)
-                                 (tide-setup)
+                                 ;; (tide-setup)
                                  (smartparens-mode +1))))
 
     ;; (defadvice web-mode-highlight-part (around tweak-jsx activate)
@@ -746,21 +746,30 @@ Store link
    (use-package tide)
    (use-package typescript-mode
      :mode "\\.tsx?\\'"
-     :hook ((before-save . (lambda () (when (equal major-mode 'typescript-mode) tide-format-before-save)))
+     :after tide
+     :hook ((before-save . (lambda () (when (equal major-mode 'typescript-mode) (tide-format-before-save))))
             (typescript-mode . company-mode)
             (typescript-mode . smartparens-mode)
             (typescript-mode . flycheck-mode)
             (typescript-mode . eldoc-mode)
             (typescript-mode . tide-hl-identifier-mode)
-            (typescript-mode . tide-setup))
-     :after tide)
+            (typescript-mode . tide-setup)))
  #+END_SRC
 *** Flow
     #+BEGIN_SRC emacs-lisp
-      (use-package company-flow)
+      (use-package flow-minor-mode
+        :after web-mode
+        :hook ((web-mode . flow-minor-enable-automatically)))
+
+      (use-package company-flow
+        :config
+        (add-to-list 'company-backends 'company-flow))
+
       (use-package flycheck-flow
         :config
-        (flycheck-add-mode 'javascript-flow 'web-mode))
+        (flycheck-add-mode 'javascript-flow 'flow-minor-mode)
+        (flycheck-add-mode 'javascript-eslint 'flow-minor-mode)
+        (flycheck-add-next-checker 'javascript-flow 'javascript-eslint))
     #+END_SRC
 ** Lisp
 #+begin_src emacs-lisp
