@@ -505,7 +505,9 @@ Open pull request URLs in the browser
    #+END_SRC
 ** eglot
    #+begin_src emacs-lisp
-     (use-package eglot)
+     (use-package eglot
+       :custom
+       (eglot-autoreconnect nil))
    #+end_src
 * Language Modes
 ** Org
