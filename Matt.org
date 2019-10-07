@@ -386,11 +386,26 @@ Open pull request URLs in the browser
            (lambda (result) (message "Tests finished with result %s" result))
            "CL-USER"))))
 
+    (defun fisxoj/projectile-cl-related-files (path)
+      "Function to teach projectile how to find my lisp implementation and tests from each other.
+
+  Based on https://github.com/bbatsov/projectile/blob/master/doc/projects.md#example---same-source-file-name-for-test-and-impl"
+      (cond
+       ((string-equal "src/" (subseq path 0 4))
+        (list :test (concat "t/" (subseq path 4))))
+       ((string-equal "t/" (subseq path 0 2))
+        (list :impl (concat "src/" (subseq path 2))))))
+
+
     (projectile-register-project-type 'common-lisp
                                       #'projectile-cl-project-p
+                                      :related-files-fn #'fisxoj/projectile-cl-related-files
+                                      :test-dir "t/"
+                                      :test-prefix "" ;; Need something here or projectile fails to make new test files
                                       :test #'projectile-cl-test-function)
 
     :custom
+    (projectile-create-missing-test-files t)
     (projectile-enable-caching nil)
     (projectile-completion-system 'ivy)
     (projectile-switch-project-action 'projectile-vc))
