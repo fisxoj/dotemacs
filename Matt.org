@@ -923,16 +923,16 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+end_src
 ** Clojure
 #+begin_src emacs-lisp
-  (use-package cider
-    :requires paredit
-    :hook ((clojure-mode . paredit-mode)
-           (clojure-mode . turn-on-eldoc-mode))
-    :custom
-    (nrepl-hide-special-buffers t)
-    (cider-repl-pop-to-buffer-on-connect nil)
-    (cider-show-error-buffer nil)
-    (cider-repl-popup-stacktraces t)
-    (cider-lein-command "lein"))
+  ;; (use-package cider
+  ;;   :requires paredit
+  ;;   :hook ((clojure-mode . paredit-mode)
+  ;;          (clojure-mode . turn-on-eldoc-mode))
+  ;;   :custom
+  ;;   (nrepl-hide-special-buffers t)
+  ;;   (cider-repl-pop-to-buffer-on-connect nil)
+  ;;   (cider-show-error-buffer nil)
+  ;;   (cider-repl-popup-stacktraces t)
+  ;;   (cider-lein-command "lein"))
 #+end_src
 ** Go
 #+BEGIN_SRC emacs-lisp
