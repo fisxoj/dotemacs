@@ -818,7 +818,26 @@ Store link
      (sly-editing-mode . paredit-mode)
      (sly-mrepl-mode . company-mode))
     :init
-    (push 'sly-repl-ansi-color sly-contribs))
+    (push 'sly-repl-ansi-color sly-contribs)
+    :config
+    (defun fisxoj/sly-xref--show-or-goto-results (xrefs _type symbol package &optional method)
+      "If only one result is returned, just go there, don't show the results list buffer."
+
+      (cond
+       ((and (= 1 (length xrefs))        ;; 1 group
+             (= 1 (length (cdar xrefs))) ;; 1 entry in that group
+             )
+        (destructuring-bind (label location) (first (cdar xrefs))
+          (sly--pop-to-source-location location 'sly-xref)))
+
+       (t
+        (sly-xref--show-results xrefs _type symbol package method))))
+
+    (advice-add 'sly-who-calls
+                :override
+                (lambda (symbol)
+                  (interactive (list (sly-read-symbol-name "Who calls: ")))
+                  (sly-xref :calls symbol 'fisxoj/sly-xref--show-or-goto-results))))
 
   (use-package sly-repl-ansi-color
     :after sly)
