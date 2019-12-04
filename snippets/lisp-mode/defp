@@ -2,7 +2,7 @@
 # name: defp
 # key: defp
 # --
-(defpackage :$1
+(defpackage $1
   (:use #:cl
         #:alexandria))
 
