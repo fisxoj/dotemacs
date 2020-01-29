@@ -850,6 +850,10 @@ Store link
 
   (use-package sly-quicklisp
     :after sly)
+
+  (use-package docker-tramp
+    :custom
+    (docker-tramp-docker-executable "podman"))
 #+end_src
 ** Elm
 #+BEGIN_SRC emacs-lisp
