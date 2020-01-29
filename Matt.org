@@ -94,7 +94,7 @@ Replace the default scratch message with something more fun
 #+begin_src emacs-lisp
   (use-package base16-theme
     :config
-    (load-theme 'base16-eighties t))
+    (load-theme 'base16-twilight t))
 
   (defun fisxoj/day-theme ()
     (interactive)
@@ -102,7 +102,7 @@ Replace the default scratch message with something more fun
 
   (defun fisxoj/night-theme ()
     (interactive)
-    (load-theme 'base16-oceanicnext t))
+    (load-theme 'base16-twilight t))
 #+end_src
 ** Font
 ;; http://sourcefoundry.org/hack/
