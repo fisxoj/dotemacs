@@ -92,17 +92,23 @@ Replace the default scratch message with something more fun
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
+  (defcustom fisxoj/day-theme 'base16-default-light
+    "My current preferred day theme.")
+
+  (defcustom fisxoj/night-theme 'base16-twilight
+    "My current preferred night theme.")
+
   (use-package base16-theme
     :config
-    (load-theme 'base16-twilight t))
+    (fisxoj/day-theme))
 
   (defun fisxoj/day-theme ()
     (interactive)
-    (load-theme 'base16-default-light t))
+    (load-theme fisxoj/day-theme t))
 
   (defun fisxoj/night-theme ()
     (interactive)
-    (load-theme 'base16-twilight t))
+    (load-theme fisxoj/night-theme t))
 #+end_src
 ** Font
 ;; http://sourcefoundry.org/hack/
