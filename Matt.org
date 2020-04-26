@@ -20,6 +20,15 @@
       (delete-region start end)
       (insert insertion)))
 #+end_src
+
+** Window navigation
+#+begin_src emacs-lisp
+  (use-package ace-window
+    :bind
+    ("M-o" . ace-window)
+    :custom
+    (aw-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o)))
+#+end_src
 * Diminish
 #+BEGIN_SRC emacs-lisp
 (use-package diminish :ensure t)
@@ -128,12 +137,12 @@ Replace the default scratch message with something more fun
 ;; http://sourcefoundry.org/hack/
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'gnu/linux)
-  (set-frame-font "Inconsolata-10"))
+  (set-frame-font "Inconsolata-14"))
 #+END_SRC
 ** Input
 Duplicate a line
 #+begin_src emacs-lisp
-(defun fisxoj/duplicate-line()
+(defun fisxoj/duplicate-line ()
   (interactive)
   (move-beginning-of-line 1)
   (kill-line)
