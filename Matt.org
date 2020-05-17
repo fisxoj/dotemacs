@@ -861,7 +861,7 @@ Store link
        ((and (= 1 (length xrefs))        ;; 1 group
              (= 1 (length (cdar xrefs))) ;; 1 entry in that group
              )
-        (destructuring-bind (label location) (first (cdar xrefs))
+        (cl-destructuring-bind (label location) (cl-first (cdar xrefs))
           (sly--pop-to-source-location location 'sly-xref)))
 
        (t
