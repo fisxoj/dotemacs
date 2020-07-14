@@ -137,7 +137,7 @@ Replace the default scratch message with something more fun
 ;; http://sourcefoundry.org/hack/
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'gnu/linux)
-  (set-frame-font "Inconsolata-14"))
+  (set-frame-font "Fira Code-14"))
 #+END_SRC
 ** Input
 Duplicate a line
