@@ -29,10 +29,10 @@
     :custom
     (aw-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i ?o)))
 #+end_src
-* Diminish
-#+BEGIN_SRC emacs-lisp
-(use-package diminish :ensure t)
-#+END_SRC
+** Diminish
+ #+BEGIN_SRC emacs-lisp
+ (use-package diminish :ensure t)
+ #+END_SRC
 ** Unicode
 https://thraxys.wordpress.com/2016/01/13/utf-8-in-emacs-everywhere-forever/
 #+BEGIN_SRC emacs-lisp
@@ -130,8 +130,6 @@ Replace the default scratch message with something more fun
       (interactive)
       (load-theme fisxoj/night-theme t))
     (fisxoj/day-theme))
-
-
 #+end_src
 ** Font
 ;; http://sourcefoundry.org/hack/
@@ -565,7 +563,7 @@ Open pull request URLs in the browser
             (lambda ()
               (writegood-mode)
               (flyspell-mode)))
-  (setq org-ellipsis "⤵"
+  (setq ;; org-ellipsis "⤵"
         org-startup-with-inline-images t)
 #+end_src
 *** Babel
