@@ -547,7 +547,7 @@ Open pull request URLs in the browser
        :custom
        (flycheck-check-syntax-automatically '(save mode-enabled)))
    #+END_SRC
-** eglot
+** Eglot
    #+begin_src emacs-lisp
      (use-package eglot
        :custom
@@ -899,43 +899,11 @@ Store link
 #+END_SRC
 ** Python
 #+BEGIN_SRC emacs-lisp
-  (use-package flycheck-mypy
-    :config
-    (add-to-list 'flycheck-enabled-checkers 'python-mypy)
-
-    :custom
-    (flycheck-python-mypy-args '("--ignore-missing-imports"))
-    (flycheck-python-flake8-executable "python3")
-    (flycheck-python-pylint-executable "python3")
-    (flycheck-python-pycompile-executable "python3"))
-
-  (use-package fill-column-indicator
-    :config
-    ;; Override FCI in babel block so it doesn't fuck up formatting there
-    (defun fci-mode-override-advice (&rest args))
-    (advice-add 'org-html-fontify-code :around
-                (lambda (fun &rest args)
-                  (advice-add 'fci-mode :override #'fci-mode-override-advice)
-                  (let ((result  (apply fun args)))
-                    (advice-remove 'fci-mode #'fci-mode-override-advice)
-                    result)))
-    ;; Set the bar at 80 chars, PEP8-style
-    (setq fci-rule-column 80))
-
-  (use-package elpy
-    :requires (flycheck-mypy fill-column-indicator)
-    :hook ((elpy-mode . flycheck-mode)
-           (elpy-mode . fci-mode)
-           (python-mode . elpy-mode)
-           (elpy-mode . smartparens-mode))
-    :diminish (elpy-mode . "☕")
-    :custom
-    (elpy-rpc-backend "jedi")
-    (elpy-rpc-python-command "python3")
-    :config
-    (elpy-enable)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (setq-default flycheck-disabled-checkers '(flycheck-flake8 flycheck-pycompile)))
+  (use-package python-mode
+    :ensure nil
+    :hook ((python-mode . eglot-ensure)
+           (python-mode . smartparens-mode)
+           (python-mode . company-mode)))
 #+END_SRC
 ** Coffeescript
 #+BEGIN_SRC emacs-lisp
