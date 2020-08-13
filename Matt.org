@@ -1166,14 +1166,3 @@ go get golang.org/x/tools/cmd/oracle
   (interactive)
   (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name)))
 #+END_SRC
-
-* Work Tweaks
-Things for my work
-#+BEGIN_SRC emacs-lisp
-  (when (file-exists-p "jira.el")
-    (load "jira.el"))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (when (file-exists-p "~/.work")
-    (set-frame-font "Inconsolata-12" t t))
-#+END_SRC
