@@ -1074,6 +1074,10 @@ go get golang.org/x/tools/cmd/oracle
        :ensure t
        :commands sbt-start sbt-command)
    #+END_SRC
+** HTTP
+#+begin_src emacs-lisp
+  (use-package restclient)
+#+end_src
 * Special Commands
 ** Flip window split
 #+BEGIN_SRC emacs-lisp
