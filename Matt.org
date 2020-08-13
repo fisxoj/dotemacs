@@ -114,10 +114,10 @@ Replace the default scratch message with something more fun
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  (defcustom fisxoj/day-theme 'base16-default-light
+  (defcustom fisxoj/day-theme 'base16-atelier-lakeside-light
     "My current preferred day theme.")
 
-  (defcustom fisxoj/night-theme 'base16-twilight
+  (defcustom fisxoj/night-theme 'base16-dracula
     "My current preferred night theme.")
 
   (use-package base16-theme
