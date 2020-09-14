@@ -1132,3 +1132,20 @@ go get golang.org/x/tools/cmd/oracle
   (interactive)
   (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name)))
 #+END_SRC
+
+** URL en/decoding
+   http://www.blogbyben.com/2010/08/handy-emacs-function-url-decode-region.html
+#+begin_src emacs-lisp
+  (defun url-decode-region (start end)
+    "Replace a region with the same contents, only URL decoded."
+    (interactive "r")
+    (let ((text (url-unhex-string (buffer-substring start end))))
+      (delete-region start end)
+      (insert text)))
+
+  (defun url-encode-region (start end)
+    (interactive "r")
+    (let ((text (url-hexify-string (buffer-substring start end))))
+      (delete-region start end)
+      (insert text)))
+#+end_src
