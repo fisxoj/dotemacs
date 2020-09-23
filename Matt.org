@@ -914,7 +914,9 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
     :after (eglot)
     :hook ((rust-mode . eglot-ensure)
            (rust-mode . smartparens-mode)
-           (rust-mode . company-mode)))
+           (rust-mode . company-mode))
+    :init
+    (setf (cdr (assoc 'rust-mode eglot-server-programs)) (list "rust-analyzer")))
 #+END_SRC
 ** Octave
 #+begin_src emacs-lisp
@@ -1148,4 +1150,15 @@ go get golang.org/x/tools/cmd/oracle
     (let ((text (url-hexify-string (buffer-substring start end))))
       (delete-region start end)
       (insert text)))
+#+end_src
+
+Extract target url from a google calendar link (and probably other obfuscated google links)
+
+#+begin_src emacs-lisp
+  (defun extract-google-url (start end)
+    (interactive "r")
+    (let* ((url (buffer-substring start end))
+           (decoded (cadr (assoc-string "q" (url-parse-query-string (cdr (url-path-and-query (url-generic-parse-url url))))))))
+      (delete-region start end)
+      (insert decoded)))
 #+end_src
