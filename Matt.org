@@ -901,7 +901,9 @@ Store link
     :ensure nil
     :hook ((python-mode . eglot-ensure)
            (python-mode . smartparens-mode)
-           (python-mode . company-mode)))
+           (python-mode . company-mode))
+    :bind (:map python-mode-map
+                ("C-c C-w C-r" . xref-find-references)))
 #+END_SRC
 ** Coffeescript
 #+BEGIN_SRC emacs-lisp
