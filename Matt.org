@@ -921,12 +921,18 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 ** Ruby
 #+begin_src emacs-lisp
   (use-package ruby-electric)
+  (use-package rbenv
+    :custom
+    (rbenv-modeline-function 'rbenv--modeline-plain)
+    :init
+    (global-rbenv-mode))
   (use-package enh-ruby-mode
     :interpreter "ruby"
     :hook ((enh-ruby-mode . ruby-electric-mode)
            (enh-ruby-mode . eglot-ensure)
            (enh-ruby-mode . company-mode)
-           (enh-ruby-mode . yas-minor-mode))
+           (enh-ruby-mode . yas-minor-mode)
+           (enh-ruby-mode . rbenv-use-corresponding))
     :mode (("\\.rb$" . enh-ruby-mode)
            ("\\.rake$" . enh-ruby-mode)
            ("Rakefile$" . enh-ruby-mode)
