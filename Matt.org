@@ -791,7 +791,7 @@ Store link
    (use-package typescript-mode
      :mode "\\.tsx?\\'"
      :after tide
-     :hook ((before-save . (lambda () (when (equal major-mode 'typescript-mode) (tide-format-before-save))))
+     :hook ((typescript-mode . prettier-mode)
             (typescript-mode . company-mode)
             (typescript-mode . smartparens-mode)
             (typescript-mode . flycheck-mode)
