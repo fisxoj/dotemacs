@@ -959,6 +959,8 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
   (use-package go-mode
     :commands yas-minor-mode
     :hook ((go-mode . eglot-ensure)
+           (go-mode . smartparens-mode)
+           (go-mode . company-mode)
            (go-mode . yas-minor-mode))
     :config
     (let ((gopath (expand-file-name "~/Code/go"))
