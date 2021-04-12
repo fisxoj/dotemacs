@@ -946,7 +946,9 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
            ("\\.gemspec$" . enh-ruby-mode)
            ("\\.ru$" . enh-ruby-mode)
            ("Gemfile$" . enh-ruby-mode)
-           ("\\.json.jbuilder$" . enh-ruby-mode)))
+           ("\\.json.jbuilder$" . enh-ruby-mode))
+    :config
+    (add-to-list 'eglot-server-programs '(enh-ruby-mode "solargraph" "socket" "--port" :autoport)))
 #+end_src
 ** Clojure
 #+begin_src emacs-lisp
