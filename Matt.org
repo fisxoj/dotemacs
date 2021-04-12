@@ -930,7 +930,12 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
   (use-package ruby-electric)
   (use-package rbenv
     :custom
-    (rbenv-modeline-function 'rbenv--modeline-plain)
+    (rbenv-modeline-function '(lambda (current-ruby)
+                                (when (member major-mode '(enh-ruby-mode ruby-mode))
+                                  (list "["
+                                        (propertize "💎" 'face 'rbenv-active-ruby-face)
+                                        current-ruby
+                                        "]"))))
     :init
     (global-rbenv-mode))
   (use-package enh-ruby-mode
