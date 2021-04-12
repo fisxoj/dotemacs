@@ -479,10 +479,12 @@ Open pull request URLs in the browser
        (help-mode          "H")
        (typescript-mode    "TS")
        (js2-mode           "JS2")
-       (python-mode        "🐍")))
+       (python-mode        "🐍")
+       (org-mode           "📑")))
   (dim-minor-names
    '((auto-fill-function " ↵")
      (isearch-mode       " 🔎")
+     (editorconfig-mode  " 🐭")
      (whitespace-mode    " _"  whitespace)
      (paredit-mode       " ()" paredit)
      (eldoc-mode         ""    eldoc)
@@ -493,7 +495,8 @@ Open pull request URLs in the browser
      (magit-mode         " ❇")
      (writegood-mode     " ✎")
      (tide-mode          " 🌊")
-     (visual-line-mode   " ⤸"))))
+     (visual-line-mode   " ⤸")
+     (company-mode       " 🏢"))))
 #+END_SRC
 ** Writegood
 #+BEGIN_SRC emacs-lisp
