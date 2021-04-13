@@ -955,8 +955,24 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
            ("\\.ru$" . enh-ruby-mode)
            ("Gemfile$" . enh-ruby-mode)
            ("\\.json.jbuilder$" . enh-ruby-mode))
+    :bind
+    ("C-c i b" . fisxoj/insert-or-kill-binding-pry)
     :config
-    (add-to-list 'eglot-server-programs '(enh-ruby-mode "solargraph" "socket" "--port" :autoport)))
+    (add-to-list 'eglot-server-programs '(enh-ruby-mode "solargraph" "socket" "--port" :autoport))
+    (defun fisxoj/insert-or-kill-binding-pry ()
+      (interactive)
+      (save-excursion
+        (if (string= (s-trim (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
+                     "binding.pry")
+            (progn (beginning-of-line)
+                   (kill-line)
+                   (kill-line))
+          (progn
+            (beginning-of-line)
+            (insert "binding.pry")
+            (indent-according-to-mode)
+            (insert "\n"))))
+      (save-buffer)))
 #+end_src
 ** Clojure
 #+begin_src emacs-lisp
