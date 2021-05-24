@@ -822,8 +822,11 @@ Store link
  #+BEGIN_SRC emacs-lisp
    (use-package tide)
    (use-package typescript-mode
-     :mode "\\.tsx?\\'"
+     :mode (("\\.tsx?\\'" . typescript-mode)
+            ("\\.jsx?\\'" . typescript-mode))
      :after tide
+     :bind (:map typescript-mode-map
+                 ("M-?" . xref-find-references))
      :hook ((typescript-mode . prettier-mode)
             (typescript-mode . company-mode)
             (typescript-mode . smartparens-mode)
