@@ -411,13 +411,7 @@ Open pull request URLs in the browser
   (use-package projectile
     :bind (("C-c p" . projectile-command-map)
            :map projectile-command-map
-           (("s s" . (lambda () (interactive)
-                       (counsel-projectile-rg
-                        (mapconcat (lambda (glob)
-                                     (concat "--glob !" (shell-quote-argument glob)))
-                                   '("*_spec.rb" "*test.tsx?")
-                                   " "))))
-            ("s S" . counsel-projectile-rg)))
+           (("s s" . counsel-projectile-rg)))
     :init
     (projectile-mode)
 
