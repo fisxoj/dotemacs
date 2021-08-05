@@ -621,6 +621,7 @@ Open pull request URLs in the browser
      (dot     . t)
      (python  . t)
      (clojure . t)
+     (shell   . t)
      (http . t)))
 
   (setq org-confirm-babel-evaluate nil
