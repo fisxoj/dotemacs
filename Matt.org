@@ -239,6 +239,12 @@ http://alexkehayias.tumblr.com/post/98888273308/simple-centered-text-mode-in-ema
        ;; per mode with `ligature-mode'.
        (global-ligature-mode t))
    #+end_src
+** Snippets
+   #+begin_src emacs-lisp
+     (use-package yasnippet
+       :init
+       (yas-global-mode))
+   #+end_src
 * I/O
 ** Elfeed
 #+begin_src emacs-lisp
