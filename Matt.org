@@ -132,6 +132,14 @@ Replace the default scratch message with something more fun
     (fisxoj/day-theme))
 #+end_src
 ** Font
+#+begin_src emacs-lisp
+  ;; https://www.masteringemacs.org/article/unicode-ligatures-color-emoji
+  ;; This stops color emoji from rendering in the modeline, for me.
+  (use-package unicode-fonts
+    :ensure t
+    :config
+    (unicode-fonts-setup))
+#+end_src
 ;; http://sourcefoundry.org/hack/
 #+BEGIN_SRC emacs-lisp
 (when (eq system-type 'gnu/linux)
