@@ -117,7 +117,7 @@ Replace the default scratch message with something more fun
   (defcustom fisxoj/day-theme 'base16-atelier-sulphurpool-light
     "My current preferred day theme.")
 
-  (defcustom fisxoj/night-theme 'base16-dracula
+  (defcustom fisxoj/night-theme 'base16-atelier-sulphurpool
     "My current preferred night theme.")
 
   (use-package base16-theme
