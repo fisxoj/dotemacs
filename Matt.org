@@ -934,6 +934,7 @@ Store link
     (add-hook 'elm-mode-hook 'elm-oracle-setup-completion))
 #+END_SRC
 ** Python
+   ~pip install python-language-server[all] pyls-mypy pyls-isort~
 #+BEGIN_SRC emacs-lisp
   (use-package python-mode
     :ensure nil
