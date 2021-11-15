@@ -807,8 +807,7 @@ Store link
            ("\\.css\\'" . web-mode)
            ("\\.html?\\'" . web-mode)
            ;; Mithril coat templates
-           ("\\.coat\\'" . web-mode)
-           ("\\.jsx?\\'" . web-mode))
+           ("\\.coat\\'" . web-mode))
 
     :hook ((web-mode . rainbow-mode)
            (web-mode . flyspell-prog-mode))
