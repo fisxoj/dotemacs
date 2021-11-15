@@ -332,8 +332,6 @@ Projects, SVC, etc
 https://www.reddit.com/r/emacs/comments/910pga/tip_how_to_use_ivy_and_its_utilities_in_your/
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
-    :defer 0.1
-    :diminish
     :bind (("C-c C-r" . ivy-resume)
            ("C-x b" . ivy-switch-buffer)
            ("C-x B" . ivy-switch-buffer-other-window))
@@ -508,35 +506,37 @@ Open pull request URLs in the browser
 ** Dim
 #+BEGIN_SRC emacs-lisp
   (use-package dim
-   :init
-  (dim-major-names
+    :init
+    (dim-major-names
      '((emacs-lisp-mode    "EL")
        (lisp-mode          "CL")
        (Info-mode          "I")
        (help-mode          "H")
        (typescript-mode    "TS")
        (js2-mode           "JS2")
-       (python-mode        "🐍")
-       (org-mode           "📑")))
-  (dim-minor-names
-   '((auto-fill-function "↵")
-     (isearch-mode       "🔎")
-     (editorconfig-mode  "🐭")
-     (whitespace-mode    "_" whitespace)
-     (paredit-mode       "()"paredit)
-     (eldoc-mode         ""   eldoc)
-     (ivy-mode           "❦")
-     (projectile-mode    "🎯")
-     (flyspell-mode      "🐦")
-     (flycheck-mode      "🐦")
-     (prettier-mode      "✨")
-     (org-indent-mode    "")
-     (magit-mode         "❇")
-     (writegood-mode     "✎")
-     (tide-mode          "🌊")
-     (visual-line-mode   "⤸")
-     (yas-minor-mode     "✁")
-     (company-mode       "🏢"))))
+       (python-mode        "PY")
+       (org-mode           "ORG")
+       (go-mode            "GO")))
+    (dim-minor-names
+     '((auto-fill-function "↵")
+       (isearch-mode       "🔎")
+       (editorconfig-mode  "🐭")
+       (whitespace-mode    "_" whitespace)
+       (paredit-mode       "()"paredit)
+       (eldoc-mode         ""   eldoc)
+       (ivy-mode           "")
+       (projectile-mode    "")
+       (flyspell-mode      "🐦")
+       (flycheck-mode      "🐦")
+       (prettier-mode      "✨")
+       (org-indent-mode    "")
+       (magit-mode         "❇")
+       (writegood-mode     "✎")
+       (tide-mode          "🌊")
+       (visual-line-mode   "⤸")
+       (yas-minor-mode     "✁")
+       (company-mode       "🏢")
+       (editorconfig-mode  ""))))
 #+END_SRC
 ** Writegood
 #+BEGIN_SRC emacs-lisp
@@ -546,7 +546,8 @@ Open pull request URLs in the browser
 #+BEGIN_SRC emacs-lisp
   (use-package org-jira
     :custom
-    (jiralib-url "https://themuse.atlassian.net/")
+    (org-jira-working-dir "~/Documents/org-jira")
+    (jiralib-url "https://codecademy.atlassian.net/")
     (org-jira-done-states '("Fertig" "Done" "Closed" "Resolved")))
 #+END_SRC
 ** Smartparens
@@ -568,13 +569,12 @@ Open pull request URLs in the browser
     (company-minimum-prefix-length 2)
     (company-tooltip-align-annotations t))
 
-  (when (>= emacs-major-version 26)
-    (use-package company-box
-      :after company-mode
-      :diminish
-      :hook company-mode
-      :custom
-      (company-box-doc-delay 0.2)))
+  (use-package company-box
+    :if (>= emacs-major-version 26)
+    :after company-mode
+    :hook company-mode
+    :custom
+    (company-box-doc-delay 0.2))
 #+END_SRC
 ** Paredit
 #+BEGIN_SRC emacs-lisp
