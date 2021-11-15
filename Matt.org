@@ -1005,7 +1005,7 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
     ("C-c i b" . fisxoj/insert-or-kill-binding-pry)
     :config
     (setenv "PAGER" (executable-find "cat"))
-    (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+    (inf-ruby-switch-setup)
     (add-to-list 'eglot-server-programs '(enh-ruby-mode "solargraph" "socket" "--port" :autoport))
     (defun fisxoj/insert-or-kill-binding-pry ()
       (interactive)
