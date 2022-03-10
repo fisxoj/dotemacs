@@ -1040,6 +1040,9 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+BEGIN_SRC emacs-lisp
   (use-package go-mode
     :commands yas-minor-mode
+    :bind (:map go-mode-map
+           ("M-?" . xref-find-references)
+           ("C-c i j" . fisxoj/go-mode/insert-json-struct-tag))
     :hook ((go-mode . eglot-ensure)
            (go-mode . smartparens-mode)
            (go-mode . company-mode)
@@ -1053,7 +1056,16 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
       (add-hook 'before-save-hook
                 (lambda ()
                   (when (eq major-mode 'go-mode)
-                    (gofmt-before-save))))))
+                    (gofmt-before-save)))))
+    (defun fisxoj/go-mode/insert-json-struct-tag ()
+      (interactive)
+      (save-excursion
+        (beginning-of-line-text)
+        (set-mark (point))
+        (forward-sexp)
+        (let ((field-name (buffer-substring-no-properties (mark) (point))))
+          (end-of-line)
+          (insert (format " `json:\"%s\"`" (string-inflection-lower-camelcase-function field-name)))))))
 #+END_SRC
 
 Here's some things to install to make all of these bits work
