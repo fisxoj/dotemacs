@@ -952,6 +952,9 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+BEGIN_SRC emacs-lisp
   (use-package rust-mode
     :after (eglot)
+    :bind (:map rust-mode-map
+           ("M-p" . flymake-goto-prev-error)
+           ("M-n" . flymake-goto-next-error))
     :hook ((rust-mode . eglot-ensure)
            (rust-mode . smartparens-mode)
            (rust-mode . company-mode))
