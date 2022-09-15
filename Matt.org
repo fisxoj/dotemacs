@@ -621,16 +621,21 @@ Open pull request URLs in the browser
   (use-package ob-http
     :after org-mode)
 
+  (use-package ob-restclient
+    :after org-mode)
+
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((gnuplot . t)
-     (lisp    . t)
-     (maxima  . t)
-     (dot     . t)
-     (python  . t)
-     (clojure . t)
-     (shell   . t)
-     (http . t)))
+   '((gnuplot  . t)
+     (lisp     . t)
+     (maxima   . t)
+     (dot      . t)
+     (python   . t)
+     (clojure  . t)
+     (shell    . t)
+     (http     . t)
+     (plantuml . t)
+     (restclient . t)))
 
   (setq org-confirm-babel-evaluate nil
         org-src-tab-acts-natively t)
