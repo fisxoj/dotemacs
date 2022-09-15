@@ -848,7 +848,9 @@ Store link
             ("\\.jsx?\\'" . typescript-mode))
      :after tide
      :bind (:map typescript-mode-map
-                 ("M-?" . xref-find-references))
+                 ;; fixme: stop this from causing it to be associated with typescript
+                 ;; ("M-?" . xref-references)
+                 )
      :hook ((typescript-mode . prettier-mode)
             (typescript-mode . company-mode)
             (typescript-mode . smartparens-mode)
