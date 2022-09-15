@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: day
+# key: day
+# --
+* `(format-time-string "[%Y-%m-%d %a %H:%M]")`
+** Work
+   $0
+** Notes
