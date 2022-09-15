@@ -1046,18 +1046,27 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
 #+end_src
 ** Go
 #+BEGIN_SRC emacs-lisp
+  (use-package gotest)
+  (use-package string-inflection)
+
   (use-package go-mode
+    :after gotest
     :commands yas-minor-mode
     :bind (:map go-mode-map
-           ("M-?" . xref-find-references)
-           ("C-c i j" . fisxoj/go-mode/insert-json-struct-tag))
+                ("M-?" . xref-find-references)
+                ("C-c i j" . fisxoj/go-mode/insert-json-lower-camel-struct-tag)
+                ("C-c i J" . fisxoj/go-mode/insert-json-underscore-struct-tag)
+                ("C-c , s" . go-test-current-test)
+                ("C-c , v" . go-test-current-file)
+                ("C-c , a" . go-test-current-project))
     :hook ((go-mode . eglot-ensure)
            (go-mode . smartparens-mode)
            (go-mode . company-mode)
            (go-mode . yas-minor-mode))
     :config
+    (put 'go-command 'safe-local-variable 'stringp)
     (let ((gopath (expand-file-name "~/Code/go"))
-        (gobin (expand-file-name "~/Code/go/bin")))
+          (gobin (expand-file-name "~/Code/go/bin")))
       (setenv "GOPATH" gopath)
       (setenv "GOBIN" gobin)
       (add-to-list 'exec-path gobin)
@@ -1065,7 +1074,7 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
                 (lambda ()
                   (when (eq major-mode 'go-mode)
                     (gofmt-before-save)))))
-    (defun fisxoj/go-mode/insert-json-struct-tag ()
+    (defun fisxoj/go-mode/insert-json-lower-camel-struct-tag ()
       (interactive)
       (save-excursion
         (beginning-of-line-text)
@@ -1073,7 +1082,17 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
         (forward-sexp)
         (let ((field-name (buffer-substring-no-properties (mark) (point))))
           (end-of-line)
-          (insert (format " `json:\"%s\"`" (string-inflection-lower-camelcase-function field-name)))))))
+          (insert (format " `json:\"%s\"`" (string-inflection-lower-camelcase-function field-name))))))
+
+    (defun fisxoj/go-mode/insert-json-underscore-struct-tag ()
+      (interactive)
+      (save-excursion
+        (beginning-of-line-text)
+        (set-mark (point))
+        (forward-sexp)
+        (let ((field-name (buffer-substring-no-properties (mark) (point))))
+          (end-of-line)
+          (insert (format " `json:\"%s\"`" (string-inflection-underscore-function field-name)))))))
 #+END_SRC
 
 Here's some things to install to make all of these bits work
