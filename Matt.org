@@ -480,7 +480,14 @@ Open pull request URLs in the browser
     (projectile-globally-ignored-file-suffixes '(".lock")))
 
   (use-package projectile-ripgrep
-    :after projectile)
+    :after projectile
+    :bind (:map projectile-command-map
+                (("s R" . fisxoj/projectile-ripgrep-current-word)))
+    :init
+    (defun fisxoj/projectile-ripgrep-current-word ()
+      "Search a whole project for the word at point.  A poor imitation of xref-references."
+      (interactive)
+      (projectile-ripgrep (current-word))))
 
   (use-package counsel-projectile
     :after projectile)
