@@ -655,7 +655,8 @@ Open pull request URLs in the browser
      (restclient . t)))
 
   (setq org-confirm-babel-evaluate nil
-        org-src-tab-acts-natively t)
+        org-src-tab-acts-natively t
+        org-babel-lisp-eval-fn 'sly-eval)
 #+end_src
 *** Capture
 #+begin_src emacs-lisp
