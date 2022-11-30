@@ -610,7 +610,8 @@ Open pull request URLs in the browser
    #+begin_src emacs-lisp
      (use-package eglot
        :custom
-       (eglot-autoreconnect nil))
+       (eglot-autoreconnect nil)
+       (eglot-autoshutdown t))
    #+end_src
 * Language Modes
 ** Org
