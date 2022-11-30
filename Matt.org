@@ -10,7 +10,7 @@
 
 #+begin_src emacs-lisp
   ;; Source: https://news.ycombinator.com/item?id=22131815
-  (defun to-quoted-array (start end quote)
+  (defun fisxoj/to-quoted-array (start end quote)
     "Turn strings on newlines into a QUOTEd, comma-separated one-liner."
     (interactive "r\nMQuote: ")
     (let ((insertion
