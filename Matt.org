@@ -363,6 +363,11 @@ https://www.reddit.com/r/emacs/comments/910pga/tip_how_to_use_ivy_and_its_utilit
            ("M-x" . counsel-M-x)
            ("M-y" . counsel-yank-pop)))
 #+END_SRC
+** Expand Region
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :bind ("C-c e" . er/expand-region))
+#+end_src
 ** Magit
 #+begin_src emacs-lisp
   (use-package magit
