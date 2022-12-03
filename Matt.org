@@ -373,10 +373,11 @@ https://www.reddit.com/r/emacs/comments/910pga/tip_how_to_use_ivy_and_its_utilit
   (use-package magit
     :defer t
     :bind (("C-x g" . magit-status)
-           :map magit-mode-map
-           ("H f" . github-browse-file)
-           ("H b" . github-browse-file-blame)
-           ("v" . endless/visit-pull-request-url))
+           ;; :map magit-status-mode-map
+           ;; ("H f" . github-browse-file)
+           ;; ("H b" . github-browse-file-blame)
+           ;; ("v" . endless/visit-pull-request-url)
+           )
     :config
     (use-package github-browse-file)
     (defun endless/visit-pull-request-url ()
