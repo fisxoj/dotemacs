@@ -903,10 +903,25 @@ Store link
     (:map sly-mode-map
           ("C-c C-M" . sly-macroexpand-1)
           ("C-c C-p" . sly-mrepl-previous-prompt)
-          ("C-c C-n" . sly-mrepl-next-prompt))
+          ("C-c C-n" . sly-mrepl-next-prompt)
+          ("C-c /" . fisxoj/align-plist))
     :init
     (push 'sly-repl-ansi-color sly-contribs)
     :config
+    (defun fisxoj/align-plist (start end)
+      "Take a plist like
+  (one two
+   three four)
+
+  and make columns line up like
+
+  (one   two
+   three four)
+
+  which might arguably be easier to parse visually."
+      (interactive "r")
+      (align-regexp start end "\\(\\s-*\\)\\( \\)" 2 1 t))
+
     (defun fisxoj/sly-xref--show-or-goto-results (xrefs _type symbol package &optional method)
       "If only one result is returned, just go there, don't show the results list buffer."
 
