@@ -559,14 +559,6 @@ Open pull request URLs in the browser
 #+BEGIN_SRC emacs-lisp
 (use-package writegood-mode)
 #+END_SRC
-** Jira
-#+BEGIN_SRC emacs-lisp
-  (use-package org-jira
-    :custom
-    (org-jira-working-dir "~/Documents/org-jira")
-    (jiralib-url "https://codecademy.atlassian.net/")
-    (org-jira-done-states '("Fertig" "Done" "Closed" "Resolved")))
-#+END_SRC
 ** Smartparens
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
