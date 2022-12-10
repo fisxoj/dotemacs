@@ -904,7 +904,8 @@ Store link
           ("C-c C-M" . sly-macroexpand-1)
           ("C-c C-p" . sly-mrepl-previous-prompt)
           ("C-c C-n" . sly-mrepl-next-prompt)
-          ("C-c /" . fisxoj/align-plist))
+          ("C-c /" . fisxoj/align-plist)
+          ("M-q" . fill-paragraph))
     :init
     (push 'sly-repl-ansi-color sly-contribs)
     :config
