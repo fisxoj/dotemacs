@@ -22,3 +22,5 @@ speed-type/
 tramp
 url/
 var/
+eln-cache/
+elpy/
