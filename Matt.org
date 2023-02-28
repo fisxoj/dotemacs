@@ -438,7 +438,7 @@ Open pull request URLs in the browser
     (projectile-mode)
 
     :config
-    (defun projectile-cl-project-p ()
+    (defun projectile-cl-project-p (&optional dir)
       "Identifies a project as being common lisp by the presence of files with .cl or .lisp extensions"
       (-any? (lambda (file)
                (let ((extension (file-name-extension file)))
