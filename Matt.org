@@ -607,6 +607,12 @@ Open pull request URLs in the browser
 ** Eglot
    #+begin_src emacs-lisp
      (use-package eglot
+       :bind
+       (("C-c f l" . flymake-show-buffer-diagnostics)
+        ("C-c f L" . flymake-show-project-diagnostics)
+        ("C-c C-e a" . eglot-code-actions)
+        ("C-c C-e r" . eglot-rename)
+        ("C-c C-e q" . eglot-code-action-quickfix))
        :custom
        (eglot-autoreconnect nil)
        (eglot-autoshutdown t))
