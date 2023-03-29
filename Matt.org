@@ -942,6 +942,16 @@ Store link
        (t
         (sly-xref--show-results xrefs _type symbol package method))))
 
+    ;; paredit added its own RET function that just inserts newlines in
+    ;; the REPL.  Call sly's original function instead when in mrepl
+    ;; mode.
+    (defun mrepl-paredit-RET (original &rest args)
+      (if (eq major-mode 'sly-mrepl-mode)
+          (sly-mrepl-return)
+        (apply original args)))
+
+    (advice-add 'paredit-RET :around 'mrepl-paredit-RET)
+
     (advice-add 'sly-who-calls
                 :override
                 (lambda (symbol)
