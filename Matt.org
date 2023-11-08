@@ -1056,6 +1056,7 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
     (setenv "PAGER" (executable-find "cat"))
     (inf-ruby-switch-setup)
     (add-to-list 'eglot-server-programs '(enh-ruby-mode "solargraph" "socket" "--port" :autoport))
+    (add-to-list 'safe-local-variable-values '(rspec-docker-command . "docker-compose run --rm"))
     (defun fisxoj/insert-or-kill-binding-pry ()
       (interactive)
       (save-excursion
