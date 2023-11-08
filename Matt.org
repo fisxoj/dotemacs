@@ -87,6 +87,7 @@ Many of these things are borrowed from [[http://pages.sachachua.com/.emacs.d/Sac
 		    (message "Not sending emacs to background, you fat-fingered dummy!")))
 
   (setf confirm-kill-emacs 'y-or-n-p)
+  (setq enable-recursive-minibuffers t)
 #+end_src
 
 Allow narrowing buffers, I know how to use it
