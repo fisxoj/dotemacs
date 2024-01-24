@@ -132,6 +132,10 @@ Replace the default scratch message with something more fun
       (load-theme fisxoj/night-theme t))
     (fisxoj/night-theme))
 #+end_src
+** Typesitter
+   #+begin_src emacs-lisp
+     (setq major-mode-remap-alist '((ruby-mode . ruby-ts-mode)))
+   #+end_src
 ** Font
 #+begin_src emacs-lisp
   ;; https://www.masteringemacs.org/article/unicode-ligatures-color-emoji
@@ -1039,24 +1043,30 @@ Based on/copied from http://bassam.co/emacs/2015/08/24/rust-with-emacs/
     :init
     (global-rbenv-mode))
 
-  (use-package inf-ruby)
+  (use-package inf-ruby
+    :config
+    (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+    (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter)
+    (add-hook 'ruby-base-mode 'inf-ruby-minor-mode)
+    (inf-ruby-enable-auto-breakpoint))
+  (use-package rspec-mode)
 
   (use-package ruby-mode
-    :hook ((ruby-mode . ruby-electric-mode)
-           (ruby-mode . eglot-ensure)
-           (ruby-mode . company-mode)
-           (ruby-mode . yas-minor-mode)
-           (ruby-mode . rbenv-use-corresponding)
-           (ruby-mode . inf-ruby-minor-mode)
-           (ruby-mode . smartparens-mode))
+    :hook ((ruby-ts-mode . ruby-electric-mode)
+           (ruby-ts-mode . eglot-ensure)
+           (ruby-ts-mode . company-mode)
+           (ruby-ts-mode . yas-minor-mode)
+           (ruby-ts-mode . rbenv-use-corresponding)
+           (ruby-ts-mode . inf-ruby-minor-mode)
+           (ruby-ts-mode . rspec-mode)
+           (ruby-ts-mode . smartparens-mode))
     :bind
     (("C-c i b" . fisxoj/insert-or-kill-binding-pry)
      :map smartparens-mode-map
      (("M-?" . nil)))
     :config
     (setenv "PAGER" (executable-find "cat"))
-    (inf-ruby-switch-setup)
-    (add-to-list 'eglot-server-programs '(enh-ruby-mode "solargraph" "socket" "--port" :autoport))
+    (add-to-list 'eglot-server-programs '(ruby-ts-mode "solargraph" "socket" "--port" :autoport))
     (add-to-list 'safe-local-variable-values '(rspec-docker-command . "docker-compose run --rm"))
     (defun fisxoj/insert-or-kill-binding-pry ()
       (interactive)
