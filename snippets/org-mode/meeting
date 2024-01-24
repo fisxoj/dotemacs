@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: meeting
+# key: meeting
+# --
+#+TITLE: $1
+#+DATE: `(format-time-string "[%Y-%m-%d %a %H:%M]")`
+#+ATTENDEES: $2
+
+* Notes
+  $0
+
+* Actions
