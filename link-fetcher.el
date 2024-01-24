@@ -8,10 +8,13 @@
       :success (cl-function (lambda (&key data &allow-other-keys)
                               (when (string-match "<title>\\([^<]+\\)</title>" data)
                                 (setq title (match-string 1 data)))))
+      :timeout 3
       :sync t)
-    (unless title
-      (setf title (read-string "Couldn't find a title, enter one")))
-    (setf title (with-temp-buffer
-                  (save-excursion (insert title))
-                  (xml-parse-string)))
+    (setf title (if title
+                    (with-temp-buffer
+                      (save-excursion (insert title))
+                      ;; unescape xml entities like &gt;
+                      (xml-parse-string))
+                  (read-string "Couldn't find a title, enter one: ")))
+
     (org-insert-link nil url title)))
