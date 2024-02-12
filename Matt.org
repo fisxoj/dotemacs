@@ -625,17 +625,16 @@ Open pull request URLs in the browser
 * Language Modes
 ** Org
 #+begin_src emacs-lisp
-  (setq org-directory "~/Documents/Notes/"
-        org-journal-dir "~/Documents/Notes/")
-#+end_src
-*** Presentation
-#+begin_src emacs-lisp
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (writegood-mode)
-              (flyspell-mode)))
-  (setq ;; org-ellipsis "⤵"
-        org-startup-with-inline-images t)
+  (use-package org
+    :hook ((org-mode . writegood-mode)
+           (org-mode . flyspell-mode))
+    :custom
+    (org-directory "~/Documents/Notes/")
+    (org-journal-file "~/Documents/Notes/journal.org")
+    (org-journal-date-format "%Y-%m-%d")
+    (org-journal-dir "~/Documents/Notes/")
+    (org-startup-with-inline-images t)
+    (org-log-done t))
 #+end_src
 *** Babel
 #+begin_src emacs-lisp
@@ -695,24 +694,6 @@ Store link
   (use-package orgit
     :after org)
 #+END_SRC
-*** Journal
-#+begin_src emacs-lisp
-(defvar org-journal-file "~/Documents/Notes/journal.org"
-  "Path to OrgMode journal file.")
-
-(defvar org-journal-dir "~/Documents/Notes/")
-
-(defvar org-journal-date-format "%Y-%m-%d"
-  "Date format string for journal headings.")
-#+end_src
-*** Speed Keys
-#+begin_src emacs-lisp
-
-#+end_src
-*** Logging
-#+begin_src emacs-lisp
-(setq org-log-done t)
-#+end_src
 *** Export
 #+begin_src emacs-lisp
 (use-package ox-html5slide)
