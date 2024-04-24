@@ -582,13 +582,6 @@ Open pull request URLs in the browser
     (company-idle-delay 0.1)
     (company-minimum-prefix-length 2)
     (company-tooltip-align-annotations t))
-
-  (use-package company-box
-    :if (>= emacs-major-version 26)
-    :after company-mode
-    :hook company-mode
-    :custom
-    (company-box-doc-delay 0.2))
 #+END_SRC
 ** Paredit
 #+BEGIN_SRC emacs-lisp
