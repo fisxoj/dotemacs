@@ -1302,3 +1302,9 @@ Extract target url from a google calendar link (and probably other obfuscated go
       (delete-region start end)
       (insert decoded)))
 #+end_src
+
+#+begin_src emacs-lisp
+  (defun fisxoj/wl-paste ()
+    (interactive)
+    (insert (shell-command-to-string "wl-paste -n | tr -d \r")))
+#+end_src
