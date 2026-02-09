@@ -325,12 +325,6 @@ Taken from [[https://github.com/skeeto/elfeed/issues/34#issuecomment-158824561][
 (add-hook 'org-store-link-functions #'my-elfeed-store-link)
 #+END_SRC
 
-** Notmuch
-#+begin_src emacs-lisp
-  (use-package notmuch
-    :defer t
-    :config (require 'org-notmuch))
-#+end_src
 * Meta-Modes
 Projects, SVC, etc
 
