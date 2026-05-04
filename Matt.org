@@ -946,9 +946,9 @@ Store link
   (use-package sly-quicklisp
     :after sly)
 
-  (use-package docker-tramp
-    :custom
-    (docker-tramp-docker-executable "podman"))
+  (use-package sly-docker
+    :after sly
+    :vc (:url "https://github.com/fisxoj/sly-docker"))
 #+end_src
 ** Python
    ~pip install python-language-server[all] pyls-mypy pyls-isort~
