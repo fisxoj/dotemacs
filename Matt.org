@@ -950,14 +950,6 @@ Store link
     :custom
     (docker-tramp-docker-executable "podman"))
 #+end_src
-** Elm
-#+BEGIN_SRC emacs-lisp
-  (use-package elm-mode
-    :config
-    (add-hook 'flycheck-mode 'flycheck-elm-setup)
-    (add-to-list 'company-backends 'company-elm)
-    (add-hook 'elm-mode-hook 'elm-oracle-setup-completion))
-#+END_SRC
 ** Python
    ~pip install python-language-server[all] pyls-mypy pyls-isort~
 #+BEGIN_SRC emacs-lisp
