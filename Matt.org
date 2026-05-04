@@ -816,7 +816,7 @@ Store link
     :config
     (flycheck-add-mode 'javascript-eslint 'web-mode)
     (add-hook 'web-mode-hook (lambda ()
-                               (when (find web-mode-content-type '("jsx" "javascript") :test 'equal)
+                               (when (cl-find web-mode-content-type '("jsx" "javascript") :test 'equal)
                                  ;; (tide-mode +1)
                                  (company-mode +1)
                                  ;; (tide-hl-identifier-mode +1)
